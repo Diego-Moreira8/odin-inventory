@@ -14,7 +14,7 @@ async function detailsGet(req, res, next) {
 
 async function createGet(req, res, next) {
   res.render(layoutView, {
-    partial: `${viewsDirectory}/createDeveloper`,
+    partial: `${viewsDirectory}/create`,
     title: "Criar Desenvolvedor",
   });
 }
