@@ -7,6 +7,7 @@ const helmet = require("helmet");
 // Routes
 const indexRouter = require("./routes/index");
 const developersRouter = require("./routes/developers");
+const developerRouter = require("./routes/developer");
 
 const PORT = 3000;
 const app = express();
@@ -26,7 +27,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Add routes
 app.use("/", indexRouter);
-app.use("/desenvolvedor", developersRouter);
+app.use("/desenvolvedores", developersRouter);
+app.use("/desenvolvedor", developerRouter);
 
 app.listen(PORT, () =>
   console.log(`Listening on port http://localhost:${PORT}`)
