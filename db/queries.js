@@ -5,6 +5,18 @@ async function getAllDevelopers() {
   return rows;
 }
 
+async function getDeveloper(id) {
+  const { rows } = await pool.query(
+    `
+      SELECT name FROM developers
+      WHERE id = $1;
+    `,
+    [id]
+  );
+
+  return rows[0];
+}
+
 async function createDeveloper(name) {
   await pool.query(
     `
@@ -15,4 +27,4 @@ async function createDeveloper(name) {
   );
 }
 
-module.exports = { createDeveloper, getAllDevelopers };
+module.exports = { getAllDevelopers, getDeveloper, createDeveloper };
