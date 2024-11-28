@@ -1,8 +1,8 @@
 const db = require("../db/queries");
 
 async function createGet(req, res, next) {
-  res.render("layout", {
-    partial: "createDeveloper",
+  res.render("layouts/layout", {
+    partial: "../pages/developer/createDeveloper",
     title: "Criar Desenvolvedor",
   });
 }
