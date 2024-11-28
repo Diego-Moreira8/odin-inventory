@@ -3,7 +3,7 @@ const db = require("../db/queries");
 async function listAllGet(req, res, next) {
   const allDevelopers = await db.getAllDevelopers();
   res.render("layout", {
-    partial: "listDevs",
+    partial: "listDevelopers",
     title: "Desenvolvedores",
     allDevelopers,
   });
