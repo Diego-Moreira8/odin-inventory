@@ -1,0 +1,11 @@
+<h1>Todos os Desenvolvedores</h1>
+
+<ul>
+  <% allDevelopers.forEach(dev => {%>
+    <li>
+      <a href=<%= `/desenvolvedor/${dev.id}` %>>
+        <%= dev.name %>
+      </a>
+    </li>
+  <% }) %>
+</ul>

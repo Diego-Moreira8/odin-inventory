@@ -1,5 +1,10 @@
 const pool = require("./pool");
 
+async function getAllDevelopers() {
+  const { rows } = await pool.query("SELECT * FROM developers;");
+  return rows;
+}
+
 async function createDeveloper(name) {
   await pool.query(
     `
@@ -10,4 +15,4 @@ async function createDeveloper(name) {
   );
 }
 
-module.exports = { createDeveloper };
+module.exports = { createDeveloper, getAllDevelopers };
