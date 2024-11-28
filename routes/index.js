@@ -1,20 +1,8 @@
 const { Router } = require("express");
-const db = require("../db/queries");
+const indexController = require("../controllers/index");
 
 const indexRouter = Router();
 
-indexRouter.get("/", (req, res) => {
-  res.send("Hello!");
-});
-
-// Create Dev
-indexRouter.get("/desenvolvedor/criar", (req, res) => {
-  res.render("createDev");
-});
-
-indexRouter.post("/desenvolvedor/criar", async (req, res) => {
-  await db.addDeveloper(req.body.developer);
-  res.send(req.body.developer);
-});
+indexRouter.get("/", indexController.homePageGet);
 
 module.exports = indexRouter;

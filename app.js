@@ -1,8 +1,12 @@
+// Modules
 const express = require("express");
-const indexRouter = require("./routes/index");
 const path = require("path");
 const morgan = require("morgan");
 const helmet = require("helmet");
+
+// Routes
+const indexRouter = require("./routes/index");
+const developersRouter = require("./routes/developers");
 
 const PORT = 3000;
 const app = express();
@@ -22,6 +26,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Add routes
 app.use("/", indexRouter);
+app.use("/desenvolvedor", developersRouter);
 
 app.listen(PORT, () =>
   console.log(`Listening on port http://localhost:${PORT}`)

@@ -1,6 +1,6 @@
 const pool = require("./pool");
 
-async function addDeveloper(name) {
+async function createDeveloper(name) {
   await pool.query(
     `
       INSERT INTO developers (name)
@@ -10,4 +10,4 @@ async function addDeveloper(name) {
   );
 }
 
-module.exports = { addDeveloper };
+module.exports = { createDeveloper };
