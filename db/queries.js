@@ -1,14 +1,14 @@
 const pool = require("./pool");
 
 async function getAllDevelopers() {
-  const { rows } = await pool.query("SELECT * FROM developers;");
+  const { rows } = await pool.query("SELECT id, name FROM developers;");
   return rows;
 }
 
 async function getDeveloper(id) {
   const { rows } = await pool.query(
     `
-      SELECT name FROM developers
+      SELECT id, name FROM developers
       WHERE id = $1;
     `,
     [id]
@@ -27,4 +27,20 @@ async function createDeveloper(name) {
   );
 }
 
-module.exports = { getAllDevelopers, getDeveloper, createDeveloper };
+async function updateDeveloper(id, name) {
+  await pool.query(
+    `
+      UPDATE developers 
+      SET name = $2 
+      WHERE id = $1;
+    `,
+    [id, name]
+  );
+}
+
+module.exports = {
+  getAllDevelopers,
+  getDeveloper,
+  createDeveloper,
+  updateDeveloper,
+};

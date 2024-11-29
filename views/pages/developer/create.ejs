@@ -1,7 +1,15 @@
-<h1>Criar Desenvolvedor</h1>
+<h1><%= title %></h1>
 
-<form method="post" action="/desenvolvedor/criar">
+<form method="post">
   <label for="developer">Nome:</label>
-  <input type="text" name="developer" id="developer" required />
+  
+  <input 
+    type="text" 
+    name="developer" 
+    id="developer" 
+    value="<%= developer?.name || '' %> "
+    required 
+  />
+
   <button type="submit">Salvar</button>
 </form>
