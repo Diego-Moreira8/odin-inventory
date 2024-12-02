@@ -68,9 +68,30 @@ async function updateGet(req, res, next) {
 }
 
 async function updatePost(req, res, next) {
-  console.log(req.body.name);
   await db.updateDeveloper(req.body.id, req.body.developer);
   res.redirect(`/desenvolvedor/${req.body.id}`);
 }
 
-module.exports = { detailsGet, createGet, createPost, updateGet, updatePost };
+async function deleteGet(req, res, next) {
+  const developer = await db.getDeveloper(req.params.id);
+  res.render(layoutView, {
+    partial: `${viewsDirectory}/delete`,
+    title: `Apagar Desenvolvedor: ${developer.name}`,
+    developer,
+  });
+}
+
+async function deletePost(req, res, next) {
+  await db.deleteDeveloper(req.body.id);
+  res.redirect("/desenvolvedores");
+}
+
+module.exports = {
+  detailsGet,
+  createGet,
+  createPost,
+  updateGet,
+  updatePost,
+  deleteGet,
+  deletePost,
+};

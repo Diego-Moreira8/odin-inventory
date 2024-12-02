@@ -1,0 +1,12 @@
+<h1><%= title %></h1>
+
+<form action="<%= `/desenvolvedor/${developer.id}/apagar` %>" method="post">
+  <div class="formRow">
+    <p>Deseja realmente apagar o desenvolvedor <b><%= developer.name %></b>?</p>
+
+    <input type="hidden" name="id" value="<%= developer.id %>" />
+
+    <button type="submit">Sim</button>
+    <a href="<%= `/desenvolvedor/${developer.id}` %>">Não</a>
+  </div>
+</form>

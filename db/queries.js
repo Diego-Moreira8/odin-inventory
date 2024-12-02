@@ -38,9 +38,14 @@ async function updateDeveloper(id, name) {
   );
 }
 
+async function deleteDeveloper(id) {
+  await pool.query("DELETE FROM developers WHERE id = $1;", [id]);
+}
+
 module.exports = {
   getAllDevelopers,
   getDeveloper,
   createDeveloper,
   updateDeveloper,
+  deleteDeveloper,
 };
