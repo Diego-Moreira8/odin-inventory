@@ -2,7 +2,7 @@
 
 <form 
   method="post"
-  action="<%= isEdit ? `/desenvolvedor/${developer?.id}/editar` : '/desenvolvedor/criar' %>"
+  action="<%= isEdit ? `/genero/${genre?.id}/editar` : '/genero/criar' %>"
 >
   <% if (errors.length > 0) { %>
     <ul>
@@ -15,23 +15,23 @@
   <% } %>
 
   <div class="formRow">
-    <label for="developer">Nome:</label>
+    <label for="genre">Nome:</label>
     
     <input
       type="text"
-      name="developer"
-      id="developer"
-      value="<%= developer?.name || '' %> "
+      name="genre"
+      id="genre"
+      value="<%= genre?.name || '' %> "
       maxlength="50"
       required
     />
   </div>
 
-  <input type="hidden" name="id" value="<%= developer?.id || '' %>">
+  <input type="hidden" name="id" value="<%= genre?.id || '' %>">
 
   <button type="submit">Salvar</button>
-  
-  <% const upperUrl = isEdit ? `/desenvolvedor/${developer?.id}` : "/desenvolvedores" %>
+
+  <% const upperUrl = isEdit ? `/genero/${genre?.id}` : "/generos" %>
 
   <a href="<%= upperUrl %>">
     Cancelar

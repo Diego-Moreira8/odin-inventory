@@ -1,0 +1,21 @@
+<h1><%= title %></h1>
+
+<% if (allGenres.length > 0) { %>
+  <ul>
+    <% allGenres.forEach(genre => {%>
+      <li>
+        <a href=<%= `/genero/${genre.id}` %>>
+          <%= genre.name %>
+        </a>
+      </li>
+    <% }) %>
+  </ul>
+<% } else {%>
+  <p>
+    <i>
+      Ainda não há gêneros. 
+      Adicione um clicando <a href="/genero/criar">aqui</a>!
+    </i>
+  </p>
+<% } %>
+

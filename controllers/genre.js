@@ -1,41 +1,41 @@
 const { body, validationResult } = require("express-validator");
 
-const db = require("../db/queries/developer");
+const db = require("../db/queries/genre");
 const renderErrorPage = require("../utils/renderErrorPage");
 
 const layoutView = "layouts/layout";
-const viewsDirectory = "../pages/developer";
-const errorMessage = "Desenvolvedor não encontrado!";
+const viewsDirectory = "../pages/genre";
+const errorMessage = "Gênero não encontrado!";
 
 const validateForm = [
-  body("developer")
+  body("genre")
     .trim()
     .notEmpty()
-    .withMessage("O desenvolvedor precisa ter um nome.")
+    .withMessage("O gênero precisa ter um nome.")
     .isLength({ max: 50 })
-    .withMessage("O nome do desenvolvedor pode ter no máximo 50 caracteres."),
+    .withMessage("O nome do gênero pode ter no máximo 50 caracteres."),
 ];
 
 async function detailsGet(req, res, next) {
-  const developer = await db.getDeveloper(req.params.id);
+  const genre = await db.getGenre(req.params.id);
 
-  if (!developer) {
+  if (!genre) {
     return renderErrorPage(res, 404, errorMessage);
   }
 
   res.render(layoutView, {
     partial: `${viewsDirectory}/details`,
-    title: developer.name,
-    developer,
+    title: genre.name,
+    genre,
   });
 }
 
 async function createGet(req, res, next) {
   res.render(layoutView, {
     partial: `${viewsDirectory}/form`,
-    title: "Criar Desenvolvedor",
+    title: "Criar Gênero",
     isEdit: false,
-    developer: {},
+    genre: {},
     errors: [],
   });
 }
@@ -49,31 +49,31 @@ const createPost = [
     if (!errors.isEmpty()) {
       return res.status(400).render(layoutView, {
         partial: `${viewsDirectory}/form`,
-        title: "Criar Desenvolvedor",
+        title: "Criar Gênero",
         isEdit: false,
-        developer: { name: req.body.developer },
+        genre: { name: req.body.genre },
         errors: errors.array(),
       });
     }
 
-    const { id } = await db.createDeveloper(req.body.developer);
-    res.redirect(`/desenvolvedor/${id}`);
+    const { id } = await db.createGenre(req.body.genre);
+    res.redirect(`/genero/${id}`);
   },
 ];
 
 async function updateGet(req, res, next) {
-  const developer = await db.getDeveloper(req.params.id);
+  const genre = await db.getGenre(req.params.id);
 
-  if (!developer) {
+  if (!genre) {
     return renderErrorPage(res, 404, errorMessage);
   }
 
   res.render(layoutView, {
     partial: `${viewsDirectory}/form`,
-    title: `Editar Desenvolvedor: ${developer.name}`,
+    title: `Editar Gênero: ${genre.name}`,
     errors: [],
     isEdit: true,
-    developer,
+    genre,
   });
 }
 
@@ -84,39 +84,39 @@ const updatePost = [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      const developer = await db.getDeveloper(req.params.id);
+      const genre = await db.getGenre(req.params.id);
 
       return res.status(400).render(layoutView, {
         partial: `${viewsDirectory}/form`,
-        title: `Editar Desenvolvedor: ${developer.name}`,
+        title: `Editar Gênero: ${genre.name}`,
         errors: errors.array(),
         isEdit: true,
-        developer: { name: req.body.developer },
+        genre: { name: req.body.genre },
       });
     }
 
-    await db.updateDeveloper(req.body.id, req.body.developer);
-    res.redirect(`/desenvolvedor/${req.body.id}`);
+    await db.updateGenre(req.body.id, req.body.genre);
+    res.redirect(`/genero/${req.body.id}`);
   },
 ];
 
 async function deleteGet(req, res, next) {
-  const developer = await db.getDeveloper(req.params.id);
+  const genre = await db.getGenre(req.params.id);
 
-  if (!developer) {
+  if (!genre) {
     return renderErrorPage(res, 404, errorMessage);
   }
 
   res.render(layoutView, {
     partial: `${viewsDirectory}/delete`,
-    title: `Apagar Desenvolvedor: ${developer.name}`,
-    developer,
+    title: `Apagar Gênero: ${genre.name}`,
+    genre,
   });
 }
 
 async function deletePost(req, res, next) {
-  await db.deleteDeveloper(req.body.id);
-  res.redirect("/desenvolvedores");
+  await db.deleteGenre(req.body.id);
+  res.redirect("/generos");
 }
 
 module.exports = {

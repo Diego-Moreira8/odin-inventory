@@ -8,6 +8,8 @@ const helmet = require("helmet");
 const indexRouter = require("./routes/index");
 const developersRouter = require("./routes/developers");
 const developerRouter = require("./routes/developer");
+const genresRouter = require("./routes/genres");
+const genreRouter = require("./routes/genre");
 
 const PORT = 3000;
 const app = express();
@@ -29,6 +31,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/desenvolvedores", developersRouter);
 app.use("/desenvolvedor", developerRouter);
+app.use("/generos", genresRouter);
+app.use("/genero", genreRouter);
 
 app.listen(PORT, () =>
   console.log(`Listening on port http://localhost:${PORT}`)

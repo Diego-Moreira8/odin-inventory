@@ -1,0 +1,12 @@
+<h1><%= title %></h1>
+
+<form action="<%= `/genero/${genre.id}/apagar` %>" method="post">
+  <div class="formRow">
+    <p>Deseja realmente apagar o gênero <b><%= genre.name %></b>?</p>
+
+    <input type="hidden" name="id" value="<%= genre.id %>" />
+
+    <button type="submit">Sim</button>
+    <a href="<%= `/genero/${genre.id}` %>">Não</a>
+  </div>
+</form>
