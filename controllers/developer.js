@@ -1,6 +1,6 @@
 const { body, validationResult } = require("express-validator");
 
-const db = require("../db/queries");
+const db = require("../db/queries/developerQueries");
 const renderErrorPage = require("../utils/renderErrorPage");
 
 const layoutView = "layouts/layout";

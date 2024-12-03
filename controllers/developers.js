@@ -1,4 +1,4 @@
-const db = require("../db/queries");
+const db = require("../db/queries/developerQueries");
 
 async function listAllGet(req, res, next) {
   const allDevelopers = await db.getAllDevelopers();
