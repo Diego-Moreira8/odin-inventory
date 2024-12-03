@@ -10,6 +10,8 @@ const developersRouter = require("./routes/developers");
 const developerRouter = require("./routes/developer");
 const genresRouter = require("./routes/genres");
 const genreRouter = require("./routes/genre");
+const platformsRouter = require("./routes/platforms");
+const platformRouter = require("./routes/platform");
 
 const PORT = 3000;
 const app = express();
@@ -33,6 +35,8 @@ app.use("/desenvolvedores", developersRouter);
 app.use("/desenvolvedor", developerRouter);
 app.use("/generos", genresRouter);
 app.use("/genero", genreRouter);
+app.use("/plataformas", platformsRouter);
+app.use("/plataforma", platformRouter);
 
 app.listen(PORT, () =>
   console.log(`Listening on port http://localhost:${PORT}`)

@@ -1,0 +1,39 @@
+<h1><%= title %></h1>
+
+<form 
+  method="post"
+  action="<%= isEdit ? `/plataforma/${platform?.id}/editar` : '/plataforma/criar' %>"
+>
+  <% if (errors.length > 0) { %>
+    <ul>
+      <% errors.forEach(error => { %>
+        <li>
+          <p><%= error.msg %></p>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <div class="formRow">
+    <label for="platform">Nome:</label>
+    
+    <input
+      type="text"
+      name="platform"
+      id="platform"
+      value="<%= platform?.name || '' %> "
+      maxlength="50"
+      required
+    />
+  </div>
+
+  <input type="hidden" name="id" value="<%= platform?.id || '' %>">
+
+  <button type="submit">Salvar</button>
+
+  <% const upperUrl = isEdit ? `/plataforma/${platform?.id}` : "/plataformas" %>
+
+  <a href="<%= upperUrl %>">
+    Cancelar
+  </a>
+</form>

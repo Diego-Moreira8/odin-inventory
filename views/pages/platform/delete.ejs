@@ -1,0 +1,12 @@
+<h1><%= title %></h1>
+
+<form action="<%= `/plataforma/${platform.id}/apagar` %>" method="post">
+  <div class="formRow">
+    <p>Deseja realmente apagar a plataforma <b><%= platform.name %></b>?</p>
+
+    <input type="hidden" name="id" value="<%= platform.id %>" />
+
+    <button type="submit">Sim</button>
+    <a href="<%= `/plataforma/${platform.id}` %>">Não</a>
+  </div>
+</form>

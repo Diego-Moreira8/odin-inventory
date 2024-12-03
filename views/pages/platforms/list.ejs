@@ -1,0 +1,21 @@
+<h1><%= title %></h1>
+
+<% if (allPlatforms.length > 0) { %>
+  <ul>
+    <% allPlatforms.forEach(platform => {%>
+      <li>
+        <a href=<%= `/plataforma/${platform.id}` %>>
+          <%= platform.name %>
+        </a>
+      </li>
+    <% }) %>
+  </ul>
+<% } else {%>
+  <p>
+    <i>
+      Ainda não há plataformas. 
+      Adicione uma clicando <a href="/plataforma/criar">aqui</a>!
+    </i>
+  </p>
+<% } %>
+
