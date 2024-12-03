@@ -18,13 +18,16 @@ async function getDeveloper(id) {
 }
 
 async function createDeveloper(name) {
-  await pool.query(
+  const { rows } = await pool.query(
     `
       INSERT INTO developers (name)
       VALUES ($1)
+      RETURNING id;
     `,
     [name]
   );
+
+  return rows[0];
 }
 
 async function updateDeveloper(id, name) {

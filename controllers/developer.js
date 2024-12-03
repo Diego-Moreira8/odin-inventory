@@ -1,9 +1,11 @@
 const { body, validationResult } = require("express-validator");
 
 const db = require("../db/queries");
+const renderErrorPage = require("../utils/renderErrorPage");
 
 const layoutView = "layouts/layout";
 const viewsDirectory = "../pages/developer";
+const errorMessage = "Desenvolvedor não encontrado!";
 
 const validateForm = [
   body("developer")
@@ -16,6 +18,10 @@ const validateForm = [
 
 async function detailsGet(req, res, next) {
   const developer = await db.getDeveloper(req.params.id);
+
+  if (!developer) {
+    return renderErrorPage(res, 404, errorMessage);
+  }
 
   res.render(layoutView, {
     partial: `${viewsDirectory}/details`,
@@ -50,13 +56,17 @@ const createPost = [
       });
     }
 
-    await db.createDeveloper(req.body.developer);
-    res.send(req.body.developer);
+    const { id } = await db.createDeveloper(req.body.developer);
+    res.redirect(`/desenvolvedor/${id}`);
   },
 ];
 
 async function updateGet(req, res, next) {
   const developer = await db.getDeveloper(req.params.id);
+
+  if (!developer) {
+    return renderErrorPage(res, 404, errorMessage);
+  }
 
   res.render(layoutView, {
     partial: `${viewsDirectory}/form`,
@@ -67,13 +77,36 @@ async function updateGet(req, res, next) {
   });
 }
 
-async function updatePost(req, res, next) {
-  await db.updateDeveloper(req.body.id, req.body.developer);
-  res.redirect(`/desenvolvedor/${req.body.id}`);
-}
+const updatePost = [
+  validateForm,
+
+  async function (req, res, next) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      const developer = await db.getDeveloper(req.params.id);
+
+      return res.status(400).render(layoutView, {
+        partial: `${viewsDirectory}/form`,
+        title: `Editar Desenvolvedor: ${developer.name}`,
+        errors: errors.array(),
+        isEdit: true,
+        developer: { name: req.body.developer },
+      });
+    }
+
+    await db.updateDeveloper(req.body.id, req.body.developer);
+    res.redirect(`/desenvolvedor/${req.body.id}`);
+  },
+];
 
 async function deleteGet(req, res, next) {
   const developer = await db.getDeveloper(req.params.id);
+
+  if (!developer) {
+    return renderErrorPage(res, 404, errorMessage);
+  }
+
   res.render(layoutView, {
     partial: `${viewsDirectory}/delete`,
     title: `Apagar Desenvolvedor: ${developer.name}`,

@@ -1,11 +1,21 @@
-<h1>Todos os Desenvolvedores</h1>
+<h1><%= title %></h1>
 
-<ul>
-  <% allDevelopers.forEach(dev => {%>
-    <li>
-      <a href=<%= `/desenvolvedor/${dev.id}` %>>
-        <%= dev.name %>
-      </a>
-    </li>
-  <% }) %>
-</ul>
+<% if (allDevelopers.length > 0) { %>
+  <ul>
+    <% allDevelopers.forEach(dev => {%>
+      <li>
+        <a href=<%= `/desenvolvedor/${dev.id}` %>>
+          <%= dev.name %>
+        </a>
+      </li>
+    <% }) %>
+  </ul>
+<% } else {%>
+  <p>
+    <i>
+      Ainda não há desenvolvedores. 
+      Adicione um clicando <a href="/desenvolvedor/criar">aqui</a>!
+    </i>
+  </p>
+<% } %>
+
