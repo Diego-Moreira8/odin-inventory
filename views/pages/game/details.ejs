@@ -1,0 +1,24 @@
+<h1><%= game.title %></h1>
+
+<% if (game.description) { %>
+  <p><%= game.description %></p>
+<% } %>
+
+<% if (game.website) { %>
+  <a href="<%= game.website %>">Site oficial.</a>
+<% } %>
+
+<a href="<%= `/desenvolvedor/${game.developer_id}` %>"></a>
+
+<% if (genres.length > 0) { %>
+  <ul>
+    <% genres.forEach(genre => { %>
+      <li>
+        <a href="<%= `/genero/${genre.id}` %>"><%= genre.name %></a>
+      </li>
+    <% }) %>
+  </ul>
+<% } %>
+
+<a href="<%= `/jogo/${game.id}/editar` %>">Editar</a>
+<a href="<%= `/jogo/${game.id}/apagar` %>">Apagar</a>
