@@ -1,4 +1,5 @@
-const db = require("../db/queries/game");
+const gamesDB = require("../db/queries/game");
+const developersDB = require("../db/queries/developer");
 const renderErrorPage = require("../utils/renderErrorPage");
 
 const layoutView = "layouts/layout";
@@ -7,8 +8,8 @@ const errorMessage = "Jogo não encontrado!";
 
 async function detailsGet(req, res, next) {
   const [game, genres] = await Promise.all([
-    db.getGame(req.params.id),
-    db.getGameGenres(req.params.id),
+    gamesDB.getGame(req.params.id),
+    gamesDB.getGameGenres(req.params.id),
   ]);
 
   if (!game) {
@@ -23,4 +24,17 @@ async function detailsGet(req, res, next) {
   });
 }
 
-module.exports = { detailsGet };
+async function createGet(req, res, next) {
+  const allDevelopers = await developersDB.getAllDevelopers();
+
+  res.render(layoutView, {
+    partial: `${viewsDirectory}/form`,
+    title: "Criar Jogo",
+    isEdit: false,
+    errors: [],
+    game: {},
+    allDevelopers,
+  });
+}
+
+module.exports = { detailsGet, createGet };

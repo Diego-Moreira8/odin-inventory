@@ -1,0 +1,80 @@
+<h1><%= title %></h1>
+
+<form 
+  action="<%= isEdit ? `/jogo/${game?.id}/editar` : '/jogo/criar' %>"
+  method="post"
+>
+  <% if (errors.length > 0) { %>
+    <ul>
+      <% errors.forEach(error => { %>
+        <li>
+          <p><%= error.msg %></p>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <div class="formRow">
+    <label for="title">Jogo:</label>
+    <input 
+      type="text"
+      name="title"
+      id="title"
+      value="<%= game?.title || "" %>"
+      placeholder="The Witcher 3: Wild Hunt"
+      maxlength="100"
+      required
+    >
+  </div>
+
+  <div class="formRow">
+    <label for="description">Descrição:</label>
+    <textarea
+      name="description"
+      id="description"
+      rows="5"
+      maxlength="250"
+    >
+      <%= game?.description || "" %>
+    </textarea>
+  </div>
+
+  <div class="formRow">
+    <label for="website">Site oficial:</label>
+    <input 
+      type="url"
+      name="website"
+      id="website"
+      value="<%= game?.website || "" %>"
+      placeholder="https://www.thewitcher.com/witcher3"
+      maxlength="100"
+    >
+  </div>
+
+  <div class="formRow">
+    <label for="developer">Desenvolvedor:</label>
+
+    <select name="developer" id="developer">
+      <option value="">--Selecione um desenvolvedor--</option>
+      
+      <% allDevelopers.forEach(dev => { %>
+        <option
+          value="<%= dev.id %>"
+          <%= dev.id === game?.dev_id ? "selected" : "" %>
+        >
+          <%= dev.name %>
+        </option>
+      <% }) %>
+    </select>
+  </div>
+
+  <input type="hidden" name="id" value="<%= game?.id || '' %>">
+
+  <button type="submit">Salvar</button> 
+
+  <% const upperUrl = isEdit ? `/jogo/${game?.id}` : "/jogos" %>
+
+  <a href="<%= upperUrl %>">
+    Cancelar
+  </a>
+</form>
