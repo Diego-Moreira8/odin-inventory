@@ -52,15 +52,15 @@
   </div>
 
   <div class="formRow">
-    <label for="developer">Desenvolvedor:</label>
+    <label for="developer_id">Desenvolvedor:</label>
 
-    <select name="developer" id="developer">
+    <select name="developer_id" id="developer">
       <option value="">--Selecione um desenvolvedor--</option>
       
       <% allDevelopers.forEach(dev => { %>
         <option
           value="<%= dev.id %>"
-          <%= dev.id === game?.dev_id ? "selected" : "" %>
+          <%= dev.id == game?.developer_id ? "selected" : "" %>
         >
           <%= dev.name %>
         </option>

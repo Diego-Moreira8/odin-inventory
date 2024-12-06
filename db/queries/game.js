@@ -25,4 +25,17 @@ async function getGameGenres(id) {
   return rows;
 }
 
-module.exports = { getAllGames, getGame, getGameGenres };
+async function createGame(title, description, website, developer_id) {
+  const { rows } = await pool.query(
+    `
+      INSERT INTO games (title, description, website, developer_id)
+      VALUES ($1, $2, $3, $4)
+      RETURNING id;
+    `,
+    [title, description, website, developer_id]
+  );
+
+  return rows[0];
+}
+
+module.exports = { getAllGames, getGame, getGameGenres, createGame };
