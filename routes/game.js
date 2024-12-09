@@ -5,6 +5,7 @@ const gameRouter = Router();
 
 gameRouter.get("/criar", gameController.createGet);
 gameRouter.post("/criar", gameController.createPost);
+gameRouter.get("/:id/editar", gameController.updateGet);
 gameRouter.get("/:id", gameController.detailsGet);
 
 module.exports = gameRouter;

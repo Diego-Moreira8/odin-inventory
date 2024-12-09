@@ -118,4 +118,31 @@ const createPost = [
   },
 ];
 
-module.exports = { detailsGet, createGet, createPost };
+async function updateGet(req, res, next) {
+  const game = await gamesDB.getGame(req.params.id);
+
+  if (!game) {
+    return renderErrorPage(res, 404, errorMessage);
+  }
+
+  const [allDevelopers, allGenres, gameGenres] = await Promise.all([
+    developersDB.getAllDevelopers(),
+    genresDB.getAllGenres(),
+    gamesDB.getGameGenres(req.params.id),
+  ]);
+
+  console.log(gameGenres);
+
+  res.render(layoutView, {
+    partial: `${viewsDirectory}/form`,
+    title: "Editar Jogo",
+    isEdit: true,
+    errors: [],
+    game,
+    gameGenres: gameGenres.map((g) => g.id),
+    allDevelopers,
+    allGenres,
+  });
+}
+
+module.exports = { detailsGet, createGet, createPost, updateGet };
