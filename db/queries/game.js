@@ -38,4 +38,21 @@ async function createGame(title, description, website, developer_id) {
   return rows[0];
 }
 
-module.exports = { getAllGames, getGame, getGameGenres, createGame };
+async function createGameGenreRelation(game_id, genre_ids) {
+  const valuesString = genre_ids.reduce(
+    (a, c, i, arr) => a + `($1, $${i + 2})` + (i < arr.length - 1 ? "," : ";"),
+    ""
+  ); // [10,20,30] => '($1, $2),($1, $3),($1, $4);'
+  const query =
+    "INSERT INTO games_genres (game_id, genre_id) VALUES " + valuesString;
+
+  await pool.query(query, [game_id, ...genre_ids]);
+}
+
+module.exports = {
+  getAllGames,
+  getGame,
+  getGameGenres,
+  createGame,
+  createGameGenreRelation,
+};

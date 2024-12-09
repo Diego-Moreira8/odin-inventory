@@ -34,9 +34,7 @@
       id="description"
       rows="5"
       maxlength="250"
-    >
-      <%= game?.description || "" %>
-    </textarea>
+    ><%= game?.description || "" %></textarea>
   </div>
 
   <div class="formRow">
@@ -67,6 +65,21 @@
       <% }) %>
     </select>
   </div>
+
+  <% allGenres.forEach(genre => { %>
+    <% const inputId = `genre${genre.id}` %>
+
+    <div>
+      <input
+        type="checkbox"
+        name="genres"
+        id="<%= inputId %>"
+        value="<%= genre.id %>"
+        <%= gameGenres.find(id => id == genre.id) ? "checked" : "" %>
+      >
+      <label for="<%= inputId %>"><%= genre.name %></label>
+    </div>
+  <% }) %>
 
   <input type="hidden" name="id" value="<%= game?.id || '' %>">
 

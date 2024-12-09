@@ -1,6 +1,7 @@
 const { body, validationResult } = require("express-validator");
 const gamesDB = require("../db/queries/game");
 const developersDB = require("../db/queries/developer");
+const genresDB = require("../db/queries/genre");
 const renderErrorPage = require("../utils/renderErrorPage");
 
 const layoutView = "layouts/layout";
@@ -28,11 +29,19 @@ const validateForm = [
     .isURL()
     .withMessage("O formato do URL do site oficial parece estar incorreto."),
 
-  body("developer")
+  body("developer_id")
     .trim()
     .notEmpty()
     .withMessage("Um desenvolvedor precisa ser selecionado."),
 ];
+
+function ensureArrayToCheckboxes(req, res, next) {
+  if (!Array.isArray(req.body.genres)) {
+    req.body.genres =
+      typeof req.body.genres === "undefined" ? [] : [req.body.genres];
+  }
+  next();
+}
 
 async function detailsGet(req, res, next) {
   const [game, genres] = await Promise.all([
@@ -53,7 +62,10 @@ async function detailsGet(req, res, next) {
 }
 
 async function createGet(req, res, next) {
-  const allDevelopers = await developersDB.getAllDevelopers();
+  const [allDevelopers, allGenres] = await Promise.all([
+    developersDB.getAllDevelopers(),
+    genresDB.getAllGenres(),
+  ]);
 
   res.render(layoutView, {
     partial: `${viewsDirectory}/form`,
@@ -61,20 +73,24 @@ async function createGet(req, res, next) {
     isEdit: false,
     errors: [],
     game: {},
+    gameGenres: [],
     allDevelopers,
+    allGenres,
   });
 }
 
 const createPost = [
   validateForm,
+  ensureArrayToCheckboxes,
 
   async function (req, res, next) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      const allDevelopers = await developersDB.getAllDevelopers();
-
-      console.log(req.body);
+      const [allDevelopers, allGenres] = await Promise.all([
+        developersDB.getAllDevelopers(),
+        genresDB.getAllGenres(),
+      ]);
 
       return res.render(layoutView, {
         partial: `${viewsDirectory}/form`,
@@ -82,17 +98,21 @@ const createPost = [
         isEdit: false,
         errors: errors.array(),
         game: req.body,
+        gameGenres: req.body.genres,
         allDevelopers,
+        allGenres,
       });
     }
 
-    const { title, description, website, developer_id } = req.body;
+    const { title, description, website, developer_id, genres } = req.body;
     const newGame = await gamesDB.createGame(
       title,
       description,
       website,
       developer_id
     );
+
+    await gamesDB.createGameGenreRelation(newGame.id, genres);
 
     res.redirect(`/jogo/${newGame.id}`);
   },
