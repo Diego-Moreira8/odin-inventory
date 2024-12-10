@@ -1,7 +1,7 @@
-const db = require("../db/queries/platform");
+const db = require("../db/allQueries");
 
 async function listAllGet(req, res, next) {
-  const allPlatforms = await db.getAllPlatforms();
+  const allPlatforms = await db.platforms.getAllPlatforms();
 
   res.render("layouts/layout", {
     partial: "../pages/platforms/list",

@@ -1,6 +1,5 @@
 const { body, validationResult } = require("express-validator");
-
-const db = require("../db/queries/genre");
+const db = require("../db/allQueries");
 const renderErrorPage = require("../utils/renderErrorPage");
 
 const layoutView = "layouts/layout";
@@ -17,7 +16,7 @@ const validateForm = [
 ];
 
 async function detailsGet(req, res, next) {
-  const genre = await db.getGenre(req.params.id);
+  const genre = await db.genres.getGenre(req.params.id);
 
   if (!genre) {
     return renderErrorPage(res, 404, errorMessage);
@@ -56,13 +55,13 @@ const createPost = [
       });
     }
 
-    const { id } = await db.createGenre(req.body.genre);
+    const { id } = await db.genres.createGenre(req.body.genre);
     res.redirect(`/genero/${id}`);
   },
 ];
 
 async function updateGet(req, res, next) {
-  const genre = await db.getGenre(req.params.id);
+  const genre = await db.genres.getGenre(req.params.id);
 
   if (!genre) {
     return renderErrorPage(res, 404, errorMessage);
@@ -84,7 +83,7 @@ const updatePost = [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      const genre = await db.getGenre(req.params.id);
+      const genre = await db.genres.getGenre(req.params.id);
 
       return res.status(400).render(layoutView, {
         partial: `${viewsDirectory}/form`,
@@ -95,13 +94,13 @@ const updatePost = [
       });
     }
 
-    await db.updateGenre(req.body.id, req.body.genre);
+    await db.genres.updateGenre(req.body.id, req.body.genre);
     res.redirect(`/genero/${req.body.id}`);
   },
 ];
 
 async function deleteGet(req, res, next) {
-  const genre = await db.getGenre(req.params.id);
+  const genre = await db.genres.getGenre(req.params.id);
 
   if (!genre) {
     return renderErrorPage(res, 404, errorMessage);
@@ -115,7 +114,7 @@ async function deleteGet(req, res, next) {
 }
 
 async function deletePost(req, res, next) {
-  await db.deleteGenre(req.body.id);
+  await db.genres.deleteGenre(req.body.id);
   res.redirect("/generos");
 }
 

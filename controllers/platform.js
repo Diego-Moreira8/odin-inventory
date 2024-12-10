@@ -1,6 +1,5 @@
 const { body, validationResult } = require("express-validator");
-
-const db = require("../db/queries/platform");
+const db = require("../db/allQueries");
 const renderErrorPage = require("../utils/renderErrorPage");
 
 const layoutView = "layouts/layout";
@@ -17,7 +16,7 @@ const validateForm = [
 ];
 
 async function detailsGet(req, res, next) {
-  const platform = await db.getPlatform(req.params.id);
+  const platform = await db.platforms.getPlatform(req.params.id);
 
   if (!platform) {
     return renderErrorPage(res, 404, errorMessage);
@@ -56,13 +55,13 @@ const createPost = [
       });
     }
 
-    const { id } = await db.createPlatform(req.body.platform);
+    const { id } = await db.platforms.createPlatform(req.body.platform);
     res.redirect(`/plataforma/${id}`);
   },
 ];
 
 async function updateGet(req, res, next) {
-  const platform = await db.getPlatform(req.params.id);
+  const platform = await db.platforms.getPlatform(req.params.id);
 
   if (!platform) {
     return renderErrorPage(res, 404, errorMessage);
@@ -84,7 +83,7 @@ const updatePost = [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      const platform = await db.getPlatform(req.params.id);
+      const platform = await db.platforms.getPlatform(req.params.id);
 
       return res.status(400).render(layoutView, {
         partial: `${viewsDirectory}/form`,
@@ -95,13 +94,13 @@ const updatePost = [
       });
     }
 
-    await db.updatePlatform(req.body.id, req.body.platform);
+    await db.platforms.updatePlatform(req.body.id, req.body.platform);
     res.redirect(`/plataforma/${req.body.id}`);
   },
 ];
 
 async function deleteGet(req, res, next) {
-  const platform = await db.getPlatform(req.params.id);
+  const platform = await db.platforms.getPlatform(req.params.id);
 
   if (!platform) {
     return renderErrorPage(res, 404, errorMessage);
@@ -115,7 +114,7 @@ async function deleteGet(req, res, next) {
 }
 
 async function deletePost(req, res, next) {
-  await db.deletePlatform(req.body.id);
+  await db.platforms.deletePlatform(req.body.id);
   res.redirect("/plataformas");
 }
 

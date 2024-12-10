@@ -1,7 +1,7 @@
-const db = require("../db/queries/genre");
+const db = require("../db/allQueries");
 
 async function listAllGet(req, res, next) {
-  const allGenres = await db.getAllGenres();
+  const allGenres = await db.genres.getAllGenres();
 
   res.render("layouts/layout", {
     partial: "../pages/genres/list",

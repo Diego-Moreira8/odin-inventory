@@ -1,8 +1,5 @@
 const { body, validationResult } = require("express-validator");
-const gamesDB = require("../db/queries/game");
-const developersDB = require("../db/queries/developer");
-const genresDB = require("../db/queries/genre");
-const renderErrorPage = require("../utils/renderErrorPage");
+const db = require("../db/allQueries");
 
 const layoutView = "layouts/layout";
 const viewsDirectory = "../pages/game";
@@ -45,8 +42,8 @@ function ensureArrayToCheckboxes(req, res, next) {
 
 async function detailsGet(req, res, next) {
   const [game, genres] = await Promise.all([
-    gamesDB.getGame(req.params.id),
-    gamesDB.getGameGenres(req.params.id),
+    db.games.getGame(req.params.id),
+    db.games.getGameGenres(req.params.id),
   ]);
 
   if (!game) {
@@ -63,8 +60,8 @@ async function detailsGet(req, res, next) {
 
 async function createGet(req, res, next) {
   const [allDevelopers, allGenres] = await Promise.all([
-    developersDB.getAllDevelopers(),
-    genresDB.getAllGenres(),
+    db.developers.getAllDevelopers(),
+    db.genres.getAllGenres(),
   ]);
 
   res.render(layoutView, {
@@ -88,8 +85,8 @@ const createPost = [
 
     if (!errors.isEmpty()) {
       const [allDevelopers, allGenres] = await Promise.all([
-        developersDB.getAllDevelopers(),
-        genresDB.getAllGenres(),
+        db.developers.getAllDevelopers(),
+        db.genres.getAllGenres(),
       ]);
 
       return res.status(400).render(layoutView, {
@@ -105,30 +102,30 @@ const createPost = [
     }
 
     const { title, description, website, developer_id, genres } = req.body;
-    const newGame = await gamesDB.createGame(
+    const newGame = await db.games.createGame(
       title,
       description,
       website,
       developer_id
     );
 
-    await gamesDB.createGameGenreRelation(newGame.id, genres);
+    await db.games.createGameGenreRelation(newGame.id, genres);
 
     res.redirect(`/jogo/${newGame.id}`);
   },
 ];
 
 async function updateGet(req, res, next) {
-  const game = await gamesDB.getGame(req.params.id);
+  const game = await db.games.getGame(req.params.id);
 
   if (!game) {
     return renderErrorPage(res, 404, errorMessage);
   }
 
   const [allDevelopers, allGenres, gameGenres] = await Promise.all([
-    developersDB.getAllDevelopers(),
-    genresDB.getAllGenres(),
-    gamesDB.getGameGenres(req.params.id),
+    db.developers.getAllDevelopers(),
+    db.genres.getAllGenres(),
+    db.games.getGameGenres(req.params.id),
   ]);
 
   res.render(layoutView, {
@@ -152,8 +149,8 @@ const updatePost = [
 
     if (!errors.isEmpty()) {
       const [allDevelopers, allGenres] = await Promise.all([
-        developersDB.getAllDevelopers(),
-        genresDB.getAllGenres(),
+        db.developers.getAllDevelopers(),
+        db.genres.getAllGenres(),
       ]);
 
       return res.status(400).render(layoutView, {
@@ -169,9 +166,9 @@ const updatePost = [
     }
 
     const { id, title, description, website, developer_id, genres } = req.body;
-    await gamesDB.updateGame(id, title, description, website, developer_id);
-    await gamesDB.deleteGameGenreRelation(id);
-    await gamesDB.createGameGenreRelation(id, genres);
+    await db.games.updateGame(id, title, description, website, developer_id);
+    await db.games.deleteGameGenreRelation(id);
+    await db.games.createGameGenreRelation(id, genres);
 
     res.redirect(`/jogo/${id}`);
   },

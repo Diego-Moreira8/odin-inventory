@@ -1,6 +1,6 @@
 const { body, validationResult } = require("express-validator");
 
-const db = require("../db/queries/developer");
+const db = require("../db/allQueries");
 const renderErrorPage = require("../utils/renderErrorPage");
 
 const layoutView = "layouts/layout";
@@ -17,7 +17,7 @@ const validateForm = [
 ];
 
 async function detailsGet(req, res, next) {
-  const developer = await db.getDeveloper(req.params.id);
+  const developer = await db.developers.getDeveloper(req.params.id);
 
   if (!developer) {
     return renderErrorPage(res, 404, errorMessage);
@@ -56,13 +56,13 @@ const createPost = [
       });
     }
 
-    const { id } = await db.createDeveloper(req.body.developer);
+    const { id } = await db.developers.createDeveloper(req.body.developer);
     res.redirect(`/desenvolvedor/${id}`);
   },
 ];
 
 async function updateGet(req, res, next) {
-  const developer = await db.getDeveloper(req.params.id);
+  const developer = await db.developers.getDeveloper(req.params.id);
 
   if (!developer) {
     return renderErrorPage(res, 404, errorMessage);
@@ -84,7 +84,7 @@ const updatePost = [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      const developer = await db.getDeveloper(req.params.id);
+      const developer = await db.developers.getDeveloper(req.params.id);
 
       return res.status(400).render(layoutView, {
         partial: `${viewsDirectory}/form`,
@@ -95,13 +95,13 @@ const updatePost = [
       });
     }
 
-    await db.updateDeveloper(req.body.id, req.body.developer);
+    await db.developers.updateDeveloper(req.body.id, req.body.developer);
     res.redirect(`/desenvolvedor/${req.body.id}`);
   },
 ];
 
 async function deleteGet(req, res, next) {
-  const developer = await db.getDeveloper(req.params.id);
+  const developer = await db.developers.getDeveloper(req.params.id);
 
   if (!developer) {
     return renderErrorPage(res, 404, errorMessage);
@@ -115,7 +115,7 @@ async function deleteGet(req, res, next) {
 }
 
 async function deletePost(req, res, next) {
-  await db.deleteDeveloper(req.body.id);
+  await db.developers.deleteDeveloper(req.body.id);
   res.redirect("/desenvolvedores");
 }
 
