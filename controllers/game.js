@@ -92,7 +92,7 @@ const createPost = [
         genresDB.getAllGenres(),
       ]);
 
-      return res.render(layoutView, {
+      return res.status(400).render(layoutView, {
         partial: `${viewsDirectory}/form`,
         title: "Criar Jogo",
         isEdit: false,
@@ -131,8 +131,6 @@ async function updateGet(req, res, next) {
     gamesDB.getGameGenres(req.params.id),
   ]);
 
-  console.log(gameGenres);
-
   res.render(layoutView, {
     partial: `${viewsDirectory}/form`,
     title: "Editar Jogo",
@@ -145,4 +143,38 @@ async function updateGet(req, res, next) {
   });
 }
 
-module.exports = { detailsGet, createGet, createPost, updateGet };
+const updatePost = [
+  validateForm,
+  ensureArrayToCheckboxes,
+
+  async function (req, res, next) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      const [allDevelopers, allGenres] = await Promise.all([
+        developersDB.getAllDevelopers(),
+        genresDB.getAllGenres(),
+      ]);
+
+      return res.status(400).render(layoutView, {
+        partial: `${viewsDirectory}/form`,
+        title: "Editar Jogo",
+        isEdit: true,
+        errors: errors.array(),
+        game: req.body,
+        gameGenres: req.body.genres,
+        allDevelopers,
+        allGenres,
+      });
+    }
+
+    const { id, title, description, website, developer_id } = req.body;
+    await gamesDB.updateGame(id, title, description, website, developer_id);
+
+    // TODO: update genres
+
+    res.redirect(`/jogo/${id}`);
+  },
+];
+
+module.exports = { detailsGet, createGet, createPost, updateGet, updatePost };

@@ -49,10 +49,22 @@ async function createGameGenreRelation(game_id, genre_ids) {
   await pool.query(query, [game_id, ...genre_ids]);
 }
 
+async function updateGame(id, title, description, website, developer_id) {
+  await pool.query(
+    `
+      UPDATE games
+      SET title = $2, description = $3, website = $4, developer_id = $5
+      WHERE id = $1;
+    `,
+    [id, title, description, website, developer_id]
+  );
+}
+
 module.exports = {
   getAllGames,
   getGame,
   getGameGenres,
   createGame,
   createGameGenreRelation,
+  updateGame,
 };
