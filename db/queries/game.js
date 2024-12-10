@@ -6,7 +6,15 @@ async function getAllGames() {
 }
 
 async function getGame(id) {
-  const { rows } = await pool.query("SELECT * FROM games WHERE id = $1;", [id]);
+  const { rows } = await pool.query(
+    `
+      SELECT games.*, developers.name AS developer_name
+      FROM games
+      JOIN developers ON games.developer_id = developers.id
+      WHERE games.id = $1;
+    `,
+    [id]
+  );
   return rows[0];
 }
 
@@ -39,14 +47,21 @@ async function createGame(title, description, website, developer_id) {
 }
 
 async function createGameGenreRelation(game_id, genre_ids) {
-  const valuesString = genre_ids.reduce(
+  if (genre_ids.length < 1) return;
+
+  const valuesForQuery = genre_ids.reduce(
     (a, c, i, arr) => a + `($1, $${i + 2})` + (i < arr.length - 1 ? "," : ";"),
     ""
   ); // [10,20,30] => '($1, $2),($1, $3),($1, $4);'
-  const query =
-    "INSERT INTO games_genres (game_id, genre_id) VALUES " + valuesString;
 
-  await pool.query(query, [game_id, ...genre_ids]);
+  await pool.query(
+    "INSERT INTO games_genres (game_id, genre_id) VALUES " + valuesForQuery,
+    [game_id, ...genre_ids]
+  );
+}
+
+async function deleteGameGenreRelation(game_id) {
+  await pool.query("DELETE FROM games_genres WHERE game_id = $1;", [game_id]);
 }
 
 async function updateGame(id, title, description, website, developer_id) {
@@ -66,5 +81,6 @@ module.exports = {
   getGameGenres,
   createGame,
   createGameGenreRelation,
+  deleteGameGenreRelation,
   updateGame,
 };

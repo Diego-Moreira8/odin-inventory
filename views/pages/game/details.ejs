@@ -5,10 +5,12 @@
 <% } %>
 
 <% if (game.website) { %>
-  <a href="<%= game.website %>">Site oficial.</a>
+  <a href="<%= game.website %>" target="_blank">Site oficial</a>
 <% } %>
 
-<a href="<%= `/desenvolvedor/${game.developer_id}` %>"></a>
+<a href="<%= `/desenvolvedor/${game.developer_id}` %>">
+  <%= game.developer_name %>
+</a>
 
 <% if (genres.length > 0) { %>
   <ul>

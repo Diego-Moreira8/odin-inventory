@@ -168,10 +168,10 @@ const updatePost = [
       });
     }
 
-    const { id, title, description, website, developer_id } = req.body;
+    const { id, title, description, website, developer_id, genres } = req.body;
     await gamesDB.updateGame(id, title, description, website, developer_id);
-
-    // TODO: update genres
+    await gamesDB.deleteGameGenreRelation(id);
+    await gamesDB.createGameGenreRelation(id, genres);
 
     res.redirect(`/jogo/${id}`);
   },
