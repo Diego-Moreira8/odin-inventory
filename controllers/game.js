@@ -1,5 +1,6 @@
 const { body, validationResult } = require("express-validator");
 const db = require("../db/allQueries");
+const renderErrorPage = require("../utils/renderErrorPage");
 
 const layoutView = "layouts/layout";
 const viewsDirectory = "../pages/game";
@@ -174,4 +175,31 @@ const updatePost = [
   },
 ];
 
-module.exports = { detailsGet, createGet, createPost, updateGet, updatePost };
+async function deleteGet(req, res, next) {
+  const game = await db.games.getGame(req.params.id);
+
+  if (!game) {
+    return renderErrorPage(res, 404, errorMessage);
+  }
+
+  res.render(layoutView, {
+    partial: `${viewsDirectory}/delete`,
+    title: `Apagar jogo: ${game.title}`,
+    game,
+  });
+}
+
+async function deletePost(req, res, next) {
+  await db.games.deleteGame(req.body.id);
+  res.redirect("/jogos");
+}
+
+module.exports = {
+  detailsGet,
+  createGet,
+  createPost,
+  updateGet,
+  updatePost,
+  deleteGet,
+  deletePost,
+};

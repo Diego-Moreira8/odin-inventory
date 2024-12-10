@@ -1,0 +1,12 @@
+<h1><%= title %></h1>
+
+<form action="<%= `/jogo/${game.id}/apagar` %>" method="post">
+  <div class="formRow">
+    <p>Deseja realmente apagar o jogo <b><%= game.title %></b>?</p>
+
+    <input type="hidden" name="id" value="<%= game.id %>" />
+
+    <button type="submit">Sim</button>
+    <a href="<%= `/jogo/${game.id}` %>">Não</a>
+  </div>
+</form>
