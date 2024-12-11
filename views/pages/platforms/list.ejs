@@ -1,5 +1,7 @@
 <h1><%= title %></h1>
 
+<a href="/plataforma/criar">Criar plataforma</a>
+
 <% if (allPlatforms.length > 0) { %>
   <ul>
     <% allPlatforms.forEach(platform => {%>
@@ -14,7 +16,6 @@
   <p>
     <i>
       Ainda não há plataformas. 
-      Adicione uma clicando <a href="/plataforma/criar">aqui</a>!
     </i>
   </p>
 <% } %>

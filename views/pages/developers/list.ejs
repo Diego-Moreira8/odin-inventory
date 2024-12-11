@@ -1,5 +1,7 @@
 <h1><%= title %></h1>
 
+<a href="/desenvolvedor/criar">Criar desenvolvedor</a>
+
 <% if (allDevelopers.length > 0) { %>
   <ul>
     <% allDevelopers.forEach(dev => {%>
@@ -14,7 +16,6 @@
   <p>
     <i>
       Ainda não há desenvolvedores. 
-      Adicione um clicando <a href="/desenvolvedor/criar">aqui</a>!
     </i>
   </p>
 <% } %>

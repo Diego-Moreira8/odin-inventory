@@ -1,5 +1,8 @@
 <h1><%= title %></h1>
 
+<a href="/jogo/criar">Criar jogo</a>
+
+<% if (allGames.length > 0) { %>
 <ul>
   <% allGames.forEach(game => { %>
   <li>
@@ -7,3 +10,8 @@
   </li>
   <% }) %>
 </ul>
+<% } else {%>
+<p>
+  <i> Ainda não há jogos. </i>
+</p>
+<% } %>
