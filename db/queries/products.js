@@ -17,4 +17,26 @@ async function getAllProducts() {
   return rows;
 }
 
-module.exports = { getAllProducts };
+async function getProduct(id) {
+  const { rows } = await pool.query(
+    `
+    SELECT 
+      products.id,
+      products.launch_date,
+      products.price,
+      games.title AS game_title,
+      games.id AS game_id,
+      platforms.name AS platform_name,
+      platforms.id AS platform_id
+    FROM products
+    JOIN games ON products.game_id = games.id
+    JOIN platforms ON products.platform_id = platforms.id
+    WHERE products.id = $1;
+    `,
+    [id]
+  );
+
+  return rows[0];
+}
+
+module.exports = { getAllProducts, getProduct };
