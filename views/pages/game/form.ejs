@@ -66,20 +66,25 @@
     </select>
   </div>
 
-  <% allGenres.forEach(genre => { %>
-    <% const inputId = `genre${genre.id}` %>
+  <fieldset>  
+    <legend>Escolha os gêneros:</legend>
 
-    <div>
-      <input
-        type="checkbox"
-        name="genres"
-        id="<%= inputId %>"
-        value="<%= genre.id %>"
-        <%= gameGenres.find(id => id == genre.id) ? "checked" : "" %>
-      >
-      <label for="<%= inputId %>"><%= genre.name %></label>
-    </div>
-  <% }) %>
+    <% allGenres.forEach(genre => { %>
+      <% const inputId = `genre${genre.id}` %>
+
+      <div>
+        <input
+          type="checkbox"
+          name="genres"
+          id="<%= inputId %>"
+          value="<%= genre.id %>"
+          <%= gameGenres.find(id => id == genre.id) ? "checked" : "" %>
+        >
+        <label for="<%= inputId %>"><%= genre.name %></label>
+      </div>
+    <% }) %>
+  </fieldset>
+
 
   <input type="hidden" name="id" value="<%= game?.id || '' %>">
 

@@ -1,7 +1,9 @@
 const pool = require("../pool");
 
 async function getAllDevelopers() {
-  const { rows } = await pool.query("SELECT id, name FROM developers;");
+  const { rows } = await pool.query(
+    "SELECT id, name FROM developers ORDER BY UPPER(name);"
+  );
   return rows;
 }
 

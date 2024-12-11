@@ -1,7 +1,9 @@
 const pool = require("../pool");
 
 async function getAllPlatforms() {
-  const { rows } = await pool.query("SELECT id, name FROM platforms;");
+  const { rows } = await pool.query(
+    "SELECT id, name FROM platforms ORDER BY UPPER(name);"
+  );
   return rows;
 }
 
