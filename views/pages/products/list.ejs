@@ -1,0 +1,22 @@
+<h1><%= title %></h1>
+
+<a href="/produto/criar">Criar produto</a>
+
+<% if (allProducts.length > 0) { %>
+  <ul>
+    <% allProducts.forEach(product => {%>
+      <li>
+        <a href=<%= `/produto/${product.id}` %>>
+          <%= `${product.game_title} (${product.platform_name})` %>
+        </a>
+      </li>
+    <% }) %>
+  </ul>
+<% } else {%>
+  <p>
+    <i>
+      Ainda não há produtos. 
+    </i>
+  </p>
+<% } %>
+

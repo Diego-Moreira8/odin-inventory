@@ -14,6 +14,7 @@ const platformsRouter = require("./routes/platforms");
 const platformRouter = require("./routes/platform");
 const gamesRouter = require("./routes/games");
 const gameRouter = require("./routes/game");
+const productsRouter = require("./routes/products");
 
 const PORT = 3000;
 const app = express();
@@ -41,6 +42,7 @@ app.use("/plataformas", platformsRouter);
 app.use("/plataforma", platformRouter);
 app.use("/jogos", gamesRouter);
 app.use("/jogo", gameRouter);
+app.use("/produtos", productsRouter);
 
 app.listen(PORT, () =>
   console.log(`Listening on port http://localhost:${PORT}`)
