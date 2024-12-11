@@ -2,3 +2,13 @@
 
 <a href="<%= `/desenvolvedor/${developer.id}/editar` %>">Editar</a>
 <a href="<%= `/desenvolvedor/${developer.id}/apagar` %>">Apagar</a>
+
+<h2>Jogos do Desenvolvedor</h2>
+
+<ul>
+  <% gamesFromDeveloper.forEach(game => { %>
+  <li>
+    <a href="<%= `/jogo/${game.id}` %>"><%= game.title %></a>
+  </li>
+  <% }) %>
+</ul>

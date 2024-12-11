@@ -23,10 +23,15 @@ async function detailsGet(req, res, next) {
     return renderErrorPage(res, 404, errorMessage);
   }
 
+  const gamesFromDeveloper = await db.games.getGamesFromDeveloper(
+    req.params.id
+  );
+
   res.render(layoutView, {
     partial: `${viewsDirectory}/details`,
     title: developer.name,
     developer,
+    gamesFromDeveloper,
   });
 }
 
