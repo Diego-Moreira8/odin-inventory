@@ -3,6 +3,7 @@
 <a href="<%= `/desenvolvedor/${developer.id}/editar` %>">Editar</a>
 <a href="<%= `/desenvolvedor/${developer.id}/apagar` %>">Apagar</a>
 
+<% if (gamesFromDeveloper.length > 0) { %>
 <h2>Jogos do Desenvolvedor</h2>
 
 <ul>
@@ -12,3 +13,6 @@
   </li>
   <% }) %>
 </ul>
+<% } else { %>
+<p><i>Não há jogos desse desenvolvedor.</i></p>
+<% } %>

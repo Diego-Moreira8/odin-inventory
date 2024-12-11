@@ -2,25 +2,29 @@
 
 <% if (game.description) { %>
   <p><%= game.description %></p>
+<% } else { %>
+  <p><i>Não foi fornecida uma descrição.</i></p>
 <% } %>
 
 <% if (game.website) { %>
   <a href="<%= game.website %>" target="_blank">Site oficial</a>
+<% } else { %>
+  <p><i>Não foi fornecido um site oficial.</i></p>
 <% } %>
 
-<a href="<%= `/desenvolvedor/${game.developer_id}` %>">
-  <%= game.developer_name %>
-</a>
+<p>
+  <b>Desenvolvedor: </b>
+  <a href="<%= `/desenvolvedor/${game.developer_id}` %>">
+    <%= game.developer_name %>
+  </a>
+</p>
 
-<% if (genres.length > 0) { %>
-  <ul>
-    <% genres.forEach(genre => { %>
-      <li>
-        <a href="<%= `/genero/${genre.id}` %>"><%= genre.name %></a>
-      </li>
-    <% }) %>
-  </ul>
-<% } %>
+<p>
+  <b><%= (genres.length > 1) ? "Gêneros" : "Gênero" %>:</b>
+  <% genres.forEach((genre, i, array) => { %>
+    <a href="<%= `/genero/${genre.id}` %>"><%= genre.name %></a><span><%= (i === array.length - 1) ? "." : ", " %></span>
+  <% }) %>
+</p>
 
 <a href="<%= `/jogo/${game.id}/editar` %>">Editar</a>
 <a href="<%= `/jogo/${game.id}/apagar` %>">Apagar</a>

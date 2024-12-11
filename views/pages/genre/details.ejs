@@ -3,6 +3,9 @@
 <a href="<%= `/genero/${genre.id}/editar` %>">Editar</a>
 <a href="<%= `/genero/${genre.id}/apagar` %>">Apagar</a>
 
+<% if (gamesWithGenre.length > 0) { %>
+<h2>Jogos com o Gênero</h2>
+
 <ul>
   <% gamesWithGenre.forEach(game => { %>
   <li>
@@ -10,3 +13,6 @@
   </li>
   <% }) %>
 </ul>
+<% } else { %>
+<p><i>Não há jogos com esse gênero.</i></p>
+<% } %>
