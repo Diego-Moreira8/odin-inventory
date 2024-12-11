@@ -23,4 +23,21 @@ async function detailsGet(req, res, next) {
   });
 }
 
-module.exports = { detailsGet };
+async function createGet(req, res, next) {
+  const [allGames, allPlatforms] = await Promise.all([
+    db.games.getAllGames(),
+    db.platforms.getAllPlatforms(),
+  ]);
+
+  res.render(layoutView, {
+    partial: `${viewsDirectory}/form`,
+    title: "Novo Produto",
+    isEdit: false,
+    errors: [],
+    product: {},
+    allGames,
+    allPlatforms,
+  });
+}
+
+module.exports = { detailsGet, createGet };
