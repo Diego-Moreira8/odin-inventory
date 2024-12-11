@@ -44,6 +44,7 @@ async function updateDeveloper(id, name) {
 }
 
 async function deleteDeveloper(id) {
+  await pool.query("DELETE FROM games WHERE developer_id = $1;", [id]);
   await pool.query("DELETE FROM developers WHERE id = $1;", [id]);
 }
 
