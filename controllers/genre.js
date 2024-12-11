@@ -22,10 +22,13 @@ async function detailsGet(req, res, next) {
     return renderErrorPage(res, 404, errorMessage);
   }
 
+  const gamesWithGenre = await db.games.getGamesWithGenre(req.params.id);
+
   res.render(layoutView, {
     partial: `${viewsDirectory}/details`,
     title: genre.name,
     genre,
+    gamesWithGenre,
   });
 }
 

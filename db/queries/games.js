@@ -19,6 +19,21 @@ async function getGamesFromDeveloper(developer_id) {
   return rows;
 }
 
+async function getGamesWithGenre(genre_id) {
+  const { rows } = await pool.query(
+    `
+      SELECT id, title 
+      FROM games
+      JOIN games_genres
+      ON games_genres.game_id = games.id
+      WHERE games_genres.genre_id = $1;
+    `,
+    [genre_id]
+  );
+
+  return rows;
+}
+
 async function getGame(id) {
   const { rows } = await pool.query(
     `
@@ -96,6 +111,7 @@ async function deleteGame(id) {
 module.exports = {
   getAllGames,
   getGamesFromDeveloper,
+  getGamesWithGenre,
   getGame,
   getGameGenres,
   createGame,
