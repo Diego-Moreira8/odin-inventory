@@ -6,6 +6,23 @@
 
     <input type="hidden" name="id" value="<%= developer.id %>" />
 
+    <% if (gamesFromDeveloper.length > 0) { %>
+    <h2>Atenção!</h2>
+    <p>
+      Todos os jogos listados abaixo estão associados a este desenvolvedor. Ao
+      confirmar a exclusão do desenvolvedor, todos os jogos também serão
+      permanentemente apagados.
+    </p>
+
+    <ul>
+      <% gamesFromDeveloper.forEach(game => { %>
+      <li>
+        <a href="<%= `/jogo/${game.id}` %>"><%= game.title %></a>
+      </li>
+      <% }) %>
+    </ul>
+    <% } %>
+
     <button type="submit">Sim</button>
     <a href="<%= `/desenvolvedor/${developer.id}` %>">Não</a>
   </div>

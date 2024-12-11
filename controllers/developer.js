@@ -112,10 +112,15 @@ async function deleteGet(req, res, next) {
     return renderErrorPage(res, 404, errorMessage);
   }
 
+  const gamesFromDeveloper = await db.games.getGamesFromDeveloper(
+    req.params.id
+  );
+
   res.render(layoutView, {
     partial: `${viewsDirectory}/delete`,
     title: `Apagar Desenvolvedor: ${developer.name}`,
     developer,
+    gamesFromDeveloper,
   });
 }
 
