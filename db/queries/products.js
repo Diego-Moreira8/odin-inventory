@@ -39,4 +39,29 @@ async function getProduct(id) {
   return rows[0];
 }
 
-module.exports = { getAllProducts, getProduct };
+async function createProduct(game_id, platform_id, launch_date, price) {
+  const { rows } = await pool.query(
+    `
+      INSERT INTO products (game_id, platform_id, launch_date, price)
+      VALUES ($1, $2, $3, $4)
+      RETURNING id;
+    `,
+    [game_id, platform_id, launch_date, price]
+  );
+
+  return rows[0];
+}
+
+async function isProductUnique(game_id, platform_id) {
+  const { rows } = await pool.query(
+    `
+      SELECT * FROM products
+      WHERE game_id = $1 AND platform_id = $2;
+    `,
+    [game_id, platform_id]
+  );
+
+  return rows.length === 0;
+}
+
+module.exports = { getAllProducts, getProduct, createProduct, isProductUnique };
