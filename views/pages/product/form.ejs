@@ -14,39 +14,58 @@
     </ul>
   <% } %>
 
-  <div class="formRow">
-    <label for="game_id">Jogo:</label>
+  <% if (isEdit) { %>
+    <div class="formRow">
+      <label for="game_id">Jogo:</label>
+      <select name="game_id" id="game_id" disabled>
+        <option><%= product?.game_title %></option>
+      </select>
+    </div>
+  <% } else { %>
+    <div class="formRow">
+      <label for="game_id">Jogo:</label>
 
-    <select name="game_id" id="game_id">
-      <option value="">--Selecione um título--</option>
-      
-      <% allGames.forEach(game => { %>
-        <option
-          value="<%= game.id %>"
-          <%= game.id == product?.game_id ? "selected" : "" %>
-        >
-          <%= game.title %>
-        </option>
-      <% }) %>
-    </select>
-  </div>
+      <select name="game_id" id="game_id">
+        <option value="">--Selecione um título--</option>
+        
+        <% allGames.forEach(game => { %>
+          <option
+            value="<%= game.id %>"
+            <%= game.id == product?.game_id ? "selected" : "" %>
+          >
+            <%= game.title %>
+          </option>
+        <% }) %>
+      </select>
+    </div>
+  <% } %>
 
-  <div class="formRow">
-    <label for="platform_id">Plataforma:</label>
 
-    <select name="platform_id" id="platform_id">
-      <option value="">--Selecione uma plataforma--</option>
-      
-      <% allPlatforms.forEach(platform => { %>
-        <option
-          value="<%= platform.id %>"
-          <%= platform.id == product?.platform_id ? "selected" : "" %>
-        >
-          <%= platform.name %>
-        </option>
-      <% }) %>
-    </select>
-  </div>
+  <% if (isEdit) { %>
+    <div class="formRow">
+      <label for="platform_id">Plataforma:</label>
+      <select name="platform_id" id="platform_id" disabled>
+          <option><%= product?.platform_name %></option>
+      </select>
+    </div>
+  <% } else { %>
+    <div class="formRow">
+      <label for="platform_id">Plataforma:</label>
+  
+      <select name="platform_id" id="platform_id">
+        <option value="">--Selecione uma plataforma--</option>
+        
+        <% allPlatforms.forEach(platform => { %>
+          <option
+            value="<%= platform.id %>"
+            <%= platform.id == product?.platform_id ? "selected" : "" %>
+          >
+            <%= platform.name %>
+          </option>
+        <% }) %>
+      </select>
+    </div>
+  <% } %>  
 
   <div class="formRow">
     <label for="launch_date">Data de lançamento na plataforma escolhida:</label>

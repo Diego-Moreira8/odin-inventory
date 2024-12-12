@@ -7,7 +7,25 @@ const layoutView = "layouts/layout";
 const viewsDirectory = "../pages/product";
 const errorMessage = "Produto não encontrado!";
 
-const validateForm = [
+const validateUpdateForm = [
+  body("launch_date")
+    .trim()
+    .isDate()
+    .withMessage("O formato de data de lançamento parece estar incorreto.")
+    .notEmpty()
+    .withMessage("O campo de data de lançamento não pode estar vazio."),
+
+  body("price")
+    .trim()
+    .isNumeric()
+    .withMessage("O campo de preço só pode conter valores numéricos.")
+    .notEmpty()
+    .withMessage("O campo de preço não pode estar vazio."),
+];
+
+const validateCreateForm = [
+  ...validateUpdateForm,
+
   body("game_id")
     .trim()
     .notEmpty()
@@ -35,20 +53,6 @@ const validateForm = [
         );
       }
     }),
-
-  body("launch_date")
-    .trim()
-    .isDate()
-    .withMessage("O formato de data de lançamento parece estar incorreto.")
-    .notEmpty()
-    .withMessage("O campo de data de lançamento não pode estar vazio."),
-
-  body("price")
-    .trim()
-    .isNumeric()
-    .withMessage("O campo de preço só pode conter valores numéricos.")
-    .notEmpty()
-    .withMessage("O campo de preço não pode estar vazio."),
 ];
 
 async function detailsGet(req, res, next) {
@@ -87,7 +91,7 @@ async function createGet(req, res, next) {
 }
 
 const createPost = [
-  validateForm,
+  validateCreateForm,
 
   async function (req, res, next) {
     const errors = validationResult(req);
@@ -125,12 +129,6 @@ async function updateGet(req, res, next) {
   const product = await db.products.getProduct(req.params.id);
 
   if (!product) renderErrorPage(res, 404, errorMessage);
-
-  const [allGames, allPlatforms] = await Promise.all([
-    db.games.getAllGames(),
-    db.platforms.getAllPlatforms(),
-  ]);
-
   res.render(layoutView, {
     partial: `${viewsDirectory}/form`,
     title: `Editar Produto: ${product.game_title} (${product.platform_name})`,
@@ -140,43 +138,35 @@ async function updateGet(req, res, next) {
       ...product,
       launch_date: formatDate.toDateInput(product.launch_date),
     },
-    allGames,
-    allPlatforms,
   });
 }
 
 const updatePost = [
-  validateForm,
+  validateUpdateForm,
 
   async function (req, res, next) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      const [product, allGames, allPlatforms] = await Promise.all([
-        db.products.getProduct(req.params.id),
-        db.games.getAllGames(),
-        db.platforms.getAllPlatforms(),
-      ]);
+      const product = await db.products.getProduct(req.params.id);
 
       return res.status(400).render(layoutView, {
         partial: `${viewsDirectory}/form`,
         title: `Editar Produto: ${product.game_title} (${product.platform_name})`,
         isEdit: true,
         errors: errors.array(),
-        product: req.body,
-        allGames,
-        allPlatforms,
+        product: {
+          id: product.id,
+          game_title: product.game_title,
+          platform_name: product.platform_name,
+          launch_date: req.body.launch_date,
+          price: req.body.price,
+        },
       });
     }
 
-    const { id, game_id, platform_id, launch_date, price } = req.body;
-    await db.products.updateProduct(
-      id,
-      game_id,
-      platform_id,
-      launch_date,
-      price
-    );
+    const { id, launch_date, price } = req.body;
+    await db.products.updateProduct(id, launch_date, price);
 
     res.redirect(`/produto/${id}`);
   },
