@@ -63,7 +63,7 @@ async function detailsGet(req, res, next) {
     title: `Detalhes do Produto: ${product.game_title} (${product.platform_name})`,
     product: {
       ...product,
-      launch_date: formatDate(product.launch_date),
+      launch_date: formatDate.toBrazilianDate(product.launch_date),
       price: product.price.replace(".", ","),
     },
   });
@@ -121,4 +121,28 @@ const createPost = [
   },
 ];
 
-module.exports = { detailsGet, createGet, createPost };
+async function updateGet(req, res, next) {
+  const product = await db.products.getProduct(req.params.id);
+
+  if (!product) renderErrorPage(res, 404, errorMessage);
+
+  const [allGames, allPlatforms] = await Promise.all([
+    db.games.getAllGames(),
+    db.platforms.getAllPlatforms(),
+  ]);
+
+  res.render(layoutView, {
+    partial: `${viewsDirectory}/form`,
+    title: `Editar Produto: ${product.game_title} (${product.platform_name})`,
+    isEdit: true,
+    errors: [],
+    product: {
+      ...product,
+      launch_date: formatDate.toDateInput(product.launch_date),
+    },
+    allGames,
+    allPlatforms,
+  });
+}
+
+module.exports = { detailsGet, createGet, createPost, updateGet };
