@@ -18,14 +18,17 @@ const validateForm = [
 async function detailsGet(req, res, next) {
   const platform = await db.platforms.getPlatform(req.params.id);
 
-  if (!platform) {
-    return renderErrorPage(res, 404, errorMessage);
-  }
+  if (!platform) return renderErrorPage(res, 404, errorMessage);
+
+  const productsForPlatform = await db.products.getProductsForPlatform(
+    req.params.id
+  );
 
   res.render(layoutView, {
     partial: `${viewsDirectory}/details`,
     title: platform.name,
     platform,
+    productsForPlatform,
   });
 }
 

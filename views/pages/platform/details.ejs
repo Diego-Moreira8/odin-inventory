@@ -2,3 +2,19 @@
 
 <a href="<%= `/plataforma/${platform.id}/editar` %>">Editar</a>
 <a href="<%= `/plataforma/${platform.id}/apagar` %>">Apagar</a>
+
+<% if (productsForPlatform.length > 0) { %>
+<h2>Produtos para esta Plataforma</h2>
+
+<ul>
+  <% productsForPlatform.forEach(product => { %>
+  <li>
+    <a href="<%= `/produto/${product.id}` %>">
+      <%= `${product.game_title}` %>
+    </a>
+  </li>
+  <% }) %>
+</ul>
+<% } else { %>
+<p><i>Não há produtos para esta plataforma.</i></p>
+<% } %>
