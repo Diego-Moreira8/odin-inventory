@@ -64,4 +64,21 @@ async function isProductUnique(game_id, platform_id) {
   return rows.length === 0;
 }
 
-module.exports = { getAllProducts, getProduct, createProduct, isProductUnique };
+async function updateProduct(id, game_id, platform_id, launch_date, price) {
+  await pool.query(
+    `
+      UPDATE products
+      SET game_id = $2, platform_id = $3, launch_date = $4, price = $5
+      WHERE id = $1;
+    `,
+    [id, game_id, platform_id, launch_date, price]
+  );
+}
+
+module.exports = {
+  getAllProducts,
+  getProduct,
+  createProduct,
+  isProductUnique,
+  updateProduct,
+};

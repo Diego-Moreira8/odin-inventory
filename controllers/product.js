@@ -145,4 +145,41 @@ async function updateGet(req, res, next) {
   });
 }
 
-module.exports = { detailsGet, createGet, createPost, updateGet };
+const updatePost = [
+  validateForm,
+
+  async function (req, res, next) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      const [product, allGames, allPlatforms] = await Promise.all([
+        db.products.getProduct(req.params.id),
+        db.games.getAllGames(),
+        db.platforms.getAllPlatforms(),
+      ]);
+
+      return res.status(400).render(layoutView, {
+        partial: `${viewsDirectory}/form`,
+        title: `Editar Produto: ${product.game_title} (${product.platform_name})`,
+        isEdit: true,
+        errors: errors.array(),
+        product: req.body,
+        allGames,
+        allPlatforms,
+      });
+    }
+
+    const { id, game_id, platform_id, launch_date, price } = req.body;
+    await db.products.updateProduct(
+      id,
+      game_id,
+      platform_id,
+      launch_date,
+      price
+    );
+
+    res.redirect(`/produto/${id}`);
+  },
+];
+
+module.exports = { detailsGet, createGet, createPost, updateGet, updatePost };
