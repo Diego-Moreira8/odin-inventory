@@ -2,7 +2,21 @@
 
 <form action="<%= `/genero/${genre.id}/apagar` %>" method="post">
   <div class="formRow">
-    <p>Deseja realmente apagar o gênero <b><%= genre.name %></b>?</p>
+    <p>Tem certeza de que deseja excluir o gênero <b><%= genre.name %></b>?</p>
+
+    <% if (gamesWithGenre.length > 0) { %>      
+    <p>
+      Os jogos listados abaixo estão associados a ele. Ao prosseguir, os jogos
+      não serão excluídos, mas perderão a associação com este gênero.
+    </p>
+
+    <ul>
+      <% gamesWithGenre.forEach(game => { %>
+      <li><%= game.title %></a></li>
+      <% }) %>
+    </ul>
+    <% } %>
+
 
     <input type="hidden" name="id" value="<%= genre.id %>" />
 
