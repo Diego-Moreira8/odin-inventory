@@ -58,7 +58,7 @@ const createPost = [
       });
     }
 
-    const { id } = await db.genres.createGenre(req.body.genre);
+    const id = await db.genres.createGenre(req.body.genre);
     res.redirect(`/genero/${id}`);
   },
 ];

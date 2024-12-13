@@ -29,7 +29,7 @@ async function createGenre(name) {
     [name]
   );
 
-  return rows[0];
+  return rows[0].id;
 }
 
 async function updateGenre(id, name) {

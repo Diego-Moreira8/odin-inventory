@@ -72,7 +72,7 @@ async function createGame(title, description, website, developer_id) {
     [title, description, website, developer_id]
   );
 
-  return rows[0];
+  return rows[0].id;
 }
 
 async function createGameGenreRelation(game_id, genre_ids) {

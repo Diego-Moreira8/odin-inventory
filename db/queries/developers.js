@@ -29,7 +29,7 @@ async function createDeveloper(name) {
     [name]
   );
 
-  return rows[0];
+  return rows[0].id;
 }
 
 async function updateDeveloper(id, name) {

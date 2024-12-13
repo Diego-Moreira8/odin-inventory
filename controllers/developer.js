@@ -61,7 +61,7 @@ const createPost = [
       });
     }
 
-    const { id } = await db.developers.createDeveloper(req.body.developer);
+    const id = await db.developers.createDeveloper(req.body.developer);
     res.redirect(`/desenvolvedor/${id}`);
   },
 ];

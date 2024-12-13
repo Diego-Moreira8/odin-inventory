@@ -114,14 +114,14 @@ const createPost = [
     }
 
     const { game_id, platform_id, launch_date, price } = req.body;
-    const newProduct = await db.products.createProduct(
+    const id = await db.products.createProduct(
       game_id,
       platform_id,
       launch_date,
       price
     );
 
-    res.redirect(`/produto/${newProduct.id}`);
+    res.redirect(`/produto/${id}`);
   },
 ];
 

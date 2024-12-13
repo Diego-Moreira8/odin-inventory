@@ -29,7 +29,7 @@ async function createPlatform(name) {
     [name]
   );
 
-  return rows[0];
+  return rows[0].id;
 }
 
 async function updatePlatform(id, name) {

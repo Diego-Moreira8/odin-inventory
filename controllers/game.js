@@ -103,16 +103,16 @@ const createPost = [
     }
 
     const { title, description, website, developer_id, genres } = req.body;
-    const newGame = await db.games.createGame(
+    const id = await db.games.createGame(
       title,
       description,
       website,
       developer_id
     );
 
-    await db.games.createGameGenreRelation(newGame.id, genres);
+    await db.games.createGameGenreRelation(id, genres);
 
-    res.redirect(`/jogo/${newGame.id}`);
+    res.redirect(`/jogo/${id}`);
   },
 ];
 

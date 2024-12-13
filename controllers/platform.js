@@ -58,7 +58,7 @@ const createPost = [
       });
     }
 
-    const { id } = await db.platforms.createPlatform(req.body.platform);
+    const id = await db.platforms.createPlatform(req.body.platform);
     res.redirect(`/plataforma/${id}`);
   },
 ];

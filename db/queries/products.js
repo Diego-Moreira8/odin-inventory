@@ -68,7 +68,7 @@ async function createProduct(game_id, platform_id, launch_date, price) {
     [game_id, platform_id, launch_date, price]
   );
 
-  return rows[0];
+  return rows[0].id;
 }
 
 async function isProductUnique(game_id, platform_id) {
