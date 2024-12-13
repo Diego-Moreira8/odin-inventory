@@ -4,6 +4,7 @@ const db = require("./allQueries");
 const genres = [];
 const developers = [];
 const games = [];
+const gamesGenres = [];
 const platforms = [];
 const products = [];
 
@@ -116,6 +117,15 @@ async function insertGame(index, title, description, website, developer_id) {
     developer_id
   );
   console.log(`Inserted game: ${title}`);
+}
+
+async function insertGameGenresRelation(index, game_id, genre_ids) {
+  gamesGenres[index] = await db.games.createGameGenreRelation(
+    game_id,
+    genre_ids
+  );
+
+  console.log(`Inserted game-genre relation: ${game_id}- ${genre_ids}`);
 }
 
 async function insertPlatform(index, name) {
@@ -249,6 +259,20 @@ async function insertGames() {
   console.log("Done inserting games");
 }
 
+async function insertGamesGenresRelations() {
+  console.log("Start inserting games-genres relations");
+  await Promise.all([
+    insertGameGenresRelation(0, games[0], [genres[0], genres[1], genres[5]]),
+    insertGameGenresRelation(1, games[1], [genres[2], genres[3], genres[6]]),
+    insertGameGenresRelation(2, games[2], [genres[2], genres[3], genres[6]]),
+    insertGameGenresRelation(3, games[3], [genres[2], genres[3]]),
+    insertGameGenresRelation(4, games[4], [genres[3], genres[5], genres[6]]),
+    insertGameGenresRelation(5, games[5], [genres[3], genres[5], genres[6]]),
+    insertGameGenresRelation(6, games[6], [genres[3], genres[5], genres[6]]),
+  ]);
+  console.log("Done inserting games-genres relations");
+}
+
 async function insertPlatforms() {
   console.log("Start inserting platforms");
 
@@ -284,6 +308,7 @@ async function main() {
   await insertDevelopers();
   await insertGenres();
   await insertGames();
+  await insertGamesGenresRelations();
   await insertPlatforms();
   await insertProducts();
 }
