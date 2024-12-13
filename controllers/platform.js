@@ -109,10 +109,15 @@ async function deleteGet(req, res, next) {
     return renderErrorPage(res, 404, errorMessage);
   }
 
+  const productsForPlatform = await db.products.getProductsForPlatform(
+    req.params.id
+  );
+
   res.render(layoutView, {
     partial: `${viewsDirectory}/delete`,
     title: `Apagar Plataforma: ${platform.name}`,
     platform,
+    productsForPlatform,
   });
 }
 

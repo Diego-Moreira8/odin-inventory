@@ -4,6 +4,21 @@
   <div class="formRow">
     <p>Deseja realmente apagar a plataforma <b><%= platform.name %></b>?</p>
 
+    <% if (productsForPlatform.length > 0) { %>
+    <h2>Atenção!</h2>
+    <p>
+      Todos os produtos listados abaixo estão associados a esta plataforma. Ao
+      confirmar a exclusão da plataforma, todos os produtos também serão
+      permanentemente apagados.
+    </p>
+
+    <ul>
+      <% productsForPlatform.forEach(product => { %>
+      <li><%= `${product.game_title} (${product.platform_name})` %></li>
+      <% }) %>
+    </ul>
+    <% } %>
+
     <input type="hidden" name="id" value="<%= platform.id %>" />
 
     <button type="submit">Sim</button>
