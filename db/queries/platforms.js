@@ -44,6 +44,7 @@ async function updatePlatform(id, name) {
 }
 
 async function deletePlatform(id) {
+  await pool.query("DELETE FROM products WHERE platform_id = $1;", [id]);
   await pool.query("DELETE FROM platforms WHERE id = $1;", [id]);
 }
 
