@@ -69,8 +69,8 @@ async function createTables() {
         game_id INT NOT NULL,
         platform_id INT NOT NULL,
         PRIMARY KEY (game_id, platform_id),
-        launch_date DATE,
-        price NUMERIC(9, 2),
+        launch_date DATE NOT NULL,
+        price NUMERIC(9, 2) NOT NULL,
         FOREIGN KEY (game_id) REFERENCES games(id),
         FOREIGN KEY (platform_id) REFERENCES platforms(id)
       );
@@ -273,7 +273,7 @@ async function insertPlatforms() {
 async function insertProducts() {
   console.log("Start inserting products");
   await Promise.all([
-    insertProduct(0, games[0], platforms[0], "2024-01-01", 19.9),
+    insertProduct(0, games[0], platforms[0], "2023-09-27", 0),
   ]);
   console.log("Done inserting products");
 }
