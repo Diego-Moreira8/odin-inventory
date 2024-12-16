@@ -10,7 +10,16 @@ async function getAllGames() {
 async function getGamesFromDeveloper(developer_id) {
   const { rows } = await pool.query(
     `
-      SELECT id, title FROM games
+      SELECT 
+        id,
+        title,
+        (
+          SELECT COUNT(*) 
+          FROM products 
+          JOIN games ON games.id = products.game_id
+          WHERE games.developer_id = $1
+        ) AS products_count
+      FROM games
       WHERE developer_id = $1;
     `,
     [developer_id]

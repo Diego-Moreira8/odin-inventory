@@ -298,6 +298,10 @@ async function insertProducts() {
   console.log("Start inserting products");
   await Promise.all([
     insertProduct(0, games[0], platforms[0], "2023-09-27", 0),
+    insertProduct(1, games[0], platforms[1], "2023-09-27", 0),
+    insertProduct(2, games[0], platforms[2], "2023-09-27", 0),
+    insertProduct(3, games[1], platforms[2], "2023-09-27", 0),
+    insertProduct(4, games[2], platforms[2], "2023-09-27", 0),
   ]);
   console.log("Done inserting products");
 }

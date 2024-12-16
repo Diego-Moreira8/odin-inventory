@@ -1,2 +1,3 @@
 form.ejs
 views/pages/game/details.ejs
+views/pages/developer/delete.ejs
