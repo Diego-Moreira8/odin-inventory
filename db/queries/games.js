@@ -114,6 +114,15 @@ async function updateGame(id, title, description, website, developer_id) {
 }
 
 async function deleteGame(id) {
+  await pool.query(
+    `
+      DELETE FROM products
+      USING games
+      WHERE products.game_id = games.id
+      AND games.id = $1;
+    `,
+    [id]
+  );
   await pool.query("DELETE FROM games WHERE id = $1;", [id]);
 }
 

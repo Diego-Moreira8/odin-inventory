@@ -17,19 +17,17 @@
     <ul>
       <% gamesFromDeveloper.forEach(game => { %>
       <li>
-        <a href="<%= `/jogo/${game.id}` %>">
-          <%= 
-            `
-              ${game.title}
-              (${game.products_count}
-              produto${game.products_count > 1 ? "s" : ""})
-            `
-          %>
-        </a>
+        <%= 
+          `
+            ${game.title}
+            (${game.products_count}
+            produto${game.products_count > 1 ? "s" : ""})
+          `
+        %>
       </li>
       <% }) %>
     </ul>
-    <% } %>
+    <% } %> 
 
     <button type="submit">Sim</button>
     <a href="<%= `/desenvolvedor/${developer.id}` %>">Não</a>

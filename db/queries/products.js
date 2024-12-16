@@ -58,6 +58,25 @@ async function getProductsForPlatform(platform_id) {
   return rows;
 }
 
+async function getProductsForGame(game_id) {
+  const { rows } = await pool.query(
+    `
+      SELECT
+        products.id,
+        games.title AS game_title,
+        platforms.name AS platform_name
+      FROM products
+      JOIN games ON products.game_id = games.id
+      JOIN platforms ON products.platform_id = platforms.id
+      WHERE games.id = $1
+      ORDER BY UPPER(platforms.name);
+    `,
+    [game_id]
+  );
+
+  return rows;
+}
+
 async function createProduct(game_id, platform_id, launch_date, price) {
   const { rows } = await pool.query(
     `
@@ -98,6 +117,7 @@ module.exports = {
   getAllProducts,
   getProduct,
   getProductsForPlatform,
+  getProductsForGame,
   createProduct,
   isProductUnique,
   updateProduct,

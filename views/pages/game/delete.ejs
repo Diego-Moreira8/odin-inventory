@@ -4,6 +4,23 @@
   <div class="formRow">
     <p>Deseja realmente apagar o jogo <b><%= game.title %></b>?</p>
 
+    <% if (productsForGame.length > 0) { %>
+    <h2>Atenção!</h2>
+    <p>
+      Todos os produtos listados abaixo, estão vinculados a este jogo. Ao
+      confirmar a exclusão do jogo, todos os produtos associados serão
+      permanentemente removidos!
+    </p>
+
+    <ul>
+      <% productsForGame.forEach(product => { %>
+        <li>
+          <%= `${product.game_title} (${product.platform_name})` %>
+        </li>
+      <% }) %>
+    </ul>
+    <% } %>
+
     <input type="hidden" name="id" value="<%= game.id %>" />
 
     <button type="submit">Sim</button>

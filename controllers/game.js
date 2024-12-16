@@ -42,20 +42,23 @@ function ensureArrayToCheckboxes(req, res, next) {
 }
 
 async function detailsGet(req, res, next) {
-  const [game, genres] = await Promise.all([
-    db.games.getGame(req.params.id),
-    db.games.getGameGenres(req.params.id),
-  ]);
+  const game = await db.games.getGame(req.params.id);
 
   if (!game) {
     return renderErrorPage(res, 404, errorMessage);
   }
+
+  const [genres, productsForGame] = await Promise.all([
+    db.games.getGameGenres(req.params.id),
+    db.products.getProductsForGame(req.params.id),
+  ]);
 
   res.render(layoutView, {
     partial: `${viewsDirectory}/details`,
     title: game.title,
     game,
     genres,
+    productsForGame,
   });
 }
 
@@ -182,10 +185,13 @@ async function deleteGet(req, res, next) {
     return renderErrorPage(res, 404, errorMessage);
   }
 
+  const productsForGame = await db.products.getProductsForGame(req.params.id);
+
   res.render(layoutView, {
     partial: `${viewsDirectory}/delete`,
     title: `Apagar jogo: ${game.title}`,
     game,
+    productsForGame,
   });
 }
 

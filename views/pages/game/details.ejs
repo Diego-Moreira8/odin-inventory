@@ -28,3 +28,19 @@
 
 <a href="<%= `/jogo/${game.id}/editar` %>">Editar</a>
 <a href="<%= `/jogo/${game.id}/apagar` %>">Apagar</a>
+
+<% if (productsForGame.length > 0) { %>
+  <h2>Produtos para este Jogo</h2>
+  
+  <ul>
+    <% productsForGame.forEach(products => { %>
+      <li>
+        <a href="<%= `/produto/${products.id}` %>">
+          <%= `${products.game_title} (${products.platform_name})` %>
+        </a>
+      </li>
+    <% }) %>
+  </ul>
+  <% } else { %>
+    <p><i>Não há produtos para este jogo.</i></p>
+  <% } %>
