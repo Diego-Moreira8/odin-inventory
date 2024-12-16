@@ -172,4 +172,29 @@ const updatePost = [
   },
 ];
 
-module.exports = { detailsGet, createGet, createPost, updateGet, updatePost };
+async function deleteGet(req, res, next) {
+  const product = await db.products.getProduct(req.params.id);
+
+  if (!product) return renderErrorPage(res, 404, errorMessage);
+
+  res.render(layoutView, {
+    partial: `${viewsDirectory}/delete`,
+    title: `Apagar Produto ${product.game_title} (${product.platform_name})`,
+    product,
+  });
+}
+
+async function deletePost(req, res, next) {
+  await db.products.deleteProduct(req.body.id);
+  res.redirect("/produtos");
+}
+
+module.exports = {
+  detailsGet,
+  createGet,
+  createPost,
+  updateGet,
+  updatePost,
+  deleteGet,
+  deletePost,
+};

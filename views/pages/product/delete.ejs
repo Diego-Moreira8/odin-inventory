@@ -1,0 +1,15 @@
+<h1><%= title %></h1>
+
+<form action="<%= `/produto/${product.id}/apagar` %>" method="post">
+  <div class="formRow">
+    <p>
+      Tem certeza de que deseja excluir o produto
+      <b><%= `${product.game_title} (${product.platform_name})` %></b>?
+    </p>
+
+    <input type="hidden" name="id" value="<%= product.id %>" />
+
+    <button type="submit">Sim</button>
+    <a href="<%= `/produto/${product.id}` %>">Não</a>
+  </div>
+</form>

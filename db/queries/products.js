@@ -113,6 +113,10 @@ async function updateProduct(id, launch_date, price) {
   );
 }
 
+async function deleteProduct(id) {
+  await pool.query("DELETE FROM products WHERE id = $1", [id]);
+}
+
 module.exports = {
   getAllProducts,
   getProduct,
@@ -121,4 +125,5 @@ module.exports = {
   createProduct,
   isProductUnique,
   updateProduct,
+  deleteProduct,
 };
