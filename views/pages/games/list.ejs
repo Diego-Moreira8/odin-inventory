@@ -1,17 +1,22 @@
-<h1><%= title %></h1>
+<div class="d-flex flex-column gap-4">
+  <h1><%= title %></h1>
 
-<a href="/jogo/criar">Criar jogo</a>
+  <a href="/jogo/criar" class="btn btn-success" role="button"> Criar jogo </a>
 
-<% if (allGames.length > 0) { %>
-<ul>
-  <% allGames.forEach(game => { %>
-  <li>
-    <a href="<%= `/jogo/${game.id}` %>"><%= game.title %></a>
-  </li>
-  <% }) %>
-</ul>
-<% } else {%>
-<p>
-  <i> Ainda não há jogos. </i>
-</p>
-<% } %>
+  <% if (allGames.length > 0) { %>
+  <div class="list-group">
+    <% allGames.forEach(game => { %>
+    <a
+      class="list-group-item list-group-item-action"
+      href="<%= `/jogo/${game.id}` %>"
+    >
+      <%= game.title %>
+    </a>
+    <% }) %>
+  </div>
+  <% } else {%>
+  <p>
+    <i> Ainda não há jogos. </i>
+  </p>
+  <% } %>
+</div>

@@ -1,22 +1,30 @@
-<h1><%= title %></h1>
+<div class="d-flex flex-column gap-4">
+  <h1><%= title %></h1>
 
-<a href="/desenvolvedor/criar">Criar desenvolvedor</a>
+  <a 
+    href="/desenvolvedor/criar"
+    class="btn btn-success"
+    role="button"
+  >
+    Criar desenvolvedor
+  </a>
 
-<% if (allDevelopers.length > 0) { %>
-  <ul>
-    <% allDevelopers.forEach(dev => {%>
-      <li>
-        <a href=<%= `/desenvolvedor/${dev.id}` %>>
-          <%= dev.name %>
-        </a>
-      </li>
-    <% }) %>
-  </ul>
-<% } else {%>
-  <p>
-    <i>
-      Ainda não há desenvolvedores. 
-    </i>
-  </p>
-<% } %>
-
+  <% if (allDevelopers.length > 0) { %>
+    <div class="list-group">
+      <% allDevelopers.forEach(dev => {%>
+          <a
+            class="list-group-item list-group-item-action"
+            href=<%= `/desenvolvedor/${dev.id}` %>
+          >
+            <%= dev.name %>
+          </a>
+      <% }) %>
+    </div>
+  <% } else {%>
+    <p>
+      <i>
+        Ainda não há desenvolvedores. 
+      </i>
+    </p>
+  <% } %>
+</div>

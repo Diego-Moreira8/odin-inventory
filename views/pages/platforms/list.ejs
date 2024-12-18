@@ -1,22 +1,30 @@
-<h1><%= title %></h1>
+<div class="d-flex flex-column gap-4">
+  <h1><%= title %></h1>
 
-<a href="/plataforma/criar">Criar plataforma</a>
+  <a 
+    href="/plataforma/criar"
+    class="btn btn-success"
+    role="button"
+  >
+    Criar plataforma
+  </a>
 
-<% if (allPlatforms.length > 0) { %>
-  <ul>
-    <% allPlatforms.forEach(platform => {%>
-      <li>
-        <a href=<%= `/plataforma/${platform.id}` %>>
+  <% if (allPlatforms.length > 0) { %>
+    <div class="list-group">
+      <% allPlatforms.forEach(platform => {%>
+        <a
+          class="list-group-item list-group-item-action"
+          href=<%= `/plataforma/${platform.id}` %>
+        >
           <%= platform.name %>
         </a>
-      </li>
-    <% }) %>
-  </ul>
-<% } else {%>
-  <p>
-    <i>
-      Ainda não há plataformas. 
-    </i>
-  </p>
-<% } %>
-
+      <% }) %>
+    </div>
+  <% } else {%>
+    <p>
+      <i>
+        Ainda não há plataformas. 
+      </i>
+    </p>
+  <% } %>
+</div>

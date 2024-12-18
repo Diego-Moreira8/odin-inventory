@@ -1,22 +1,31 @@
-<h1><%= title %></h1>
+<div class="d-flex flex-column gap-4">
+  <h1><%= title %></h1>
 
-<a href="/produto/criar">Criar produto</a>
+  <a 
+    href="/produto/criar"
+    class="btn btn-success"
+    role="button"
+  >
+    Criar produto
+  </a>
 
-<% if (allProducts.length > 0) { %>
-  <ul>
-    <% allProducts.forEach(product => {%>
-      <li>
-        <a href=<%= `/produto/${product.id}` %>>
+  <% if (allProducts.length > 0) { %>
+     <div class="list-group">
+      <% allProducts.forEach(product => {%>
+        <a
+          class="list-group-item list-group-item-action"
+          href=<%= `/produto/${product.id}` %>
+        >
           <%= `${product.game_title} (${product.platform_name})` %>
         </a>
-      </li>
-    <% }) %>
-  </ul>
-<% } else {%>
-  <p>
-    <i>
-      Ainda não há produtos. 
-    </i>
-  </p>
-<% } %>
+      <% }) %>
+     </div>
+  <% } else {%>
+    <p>
+      <i>
+        Ainda não há produtos. 
+      </i>
+    </p>
+  <% } %>
+</div>
 
