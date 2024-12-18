@@ -16,22 +16,40 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="/desenvolvedores">Desenvolvedores</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/generos">Gêneros</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/plataformas">Plataformas</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/jogos">Jogos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/produtos">Produtos</a>
-        </li>
+        <!-- Nav links will be rendered with the script below -->
       </ul>
     </div>
   </div>
 </nav>
+
+<script>
+  window.onload = renderNavLinks = () => {
+    const nav = document.querySelector(".navbar-nav");
+    const navLinks = [
+      { path: "/desenvolvedores", name: "Desenvolvedores" },
+      { path: "/generos", name: "Gêneros" },
+      { path: "/plataformas", name: "Plataformas" },
+      { path: "/jogos", name: "Jogos" },
+      { path: "/produtos", name: "Produtos" },
+    ];
+
+    navLinks.forEach((link) => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+
+      li.className = "nav-item";
+      a.className = "nav-link";
+      a.href = link.path;
+      a.textContent = link.name;
+
+      if (location.pathname === link.path) {
+        a.classList.add("active");
+        a.classList.add("disabled");
+        a.setAttribute("aria-current", "page");
+      }
+
+      li.appendChild(a);
+      nav.appendChild(li);
+    });
+  };
+</script>
