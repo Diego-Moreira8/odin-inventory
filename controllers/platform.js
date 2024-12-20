@@ -26,7 +26,7 @@ async function detailsGet(req, res, next) {
 
   res.render(layoutView, {
     partial: `${viewsDirectory}/details`,
-    title: platform.name,
+    title: `Detalhes da Plataforma: ${platform.name}`,
     platform,
     productsForPlatform,
   });

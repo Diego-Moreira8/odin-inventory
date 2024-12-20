@@ -55,7 +55,7 @@ async function detailsGet(req, res, next) {
 
   res.render(layoutView, {
     partial: `${viewsDirectory}/details`,
-    title: game.title,
+    title: `Detalhes do Jogo: ${game.title}`,
     game,
     genres,
     productsForGame,
@@ -134,7 +134,7 @@ async function updateGet(req, res, next) {
 
   res.render(layoutView, {
     partial: `${viewsDirectory}/form`,
-    title: "Editar Jogo",
+    title: `Editar Jogo: ${game.title}`,
     isEdit: true,
     errors: [],
     game,

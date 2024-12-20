@@ -26,7 +26,7 @@ async function detailsGet(req, res, next) {
 
   res.render(layoutView, {
     partial: `${viewsDirectory}/details`,
-    title: genre.name,
+    title: `Detalhes do Gênero: ${genre.name}`,
     genre,
     gamesWithGenre,
   });

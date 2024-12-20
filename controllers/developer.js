@@ -29,7 +29,7 @@ async function detailsGet(req, res, next) {
 
   res.render(layoutView, {
     partial: `${viewsDirectory}/details`,
-    title: developer.name,
+    title: `Detalhes do Desenvolvedor: ${developer.name}`,
     developer,
     gamesFromDeveloper,
   });

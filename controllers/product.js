@@ -81,7 +81,7 @@ async function createGet(req, res, next) {
 
   res.render(layoutView, {
     partial: `${viewsDirectory}/form`,
-    title: "Novo Produto",
+    title: "Criar Produto",
     isEdit: false,
     errors: [],
     product: {},
@@ -104,7 +104,7 @@ const createPost = [
 
       return res.status(400).render(layoutView, {
         partial: `${viewsDirectory}/form`,
-        title: "Novo Produto",
+        title: "Criar Produto",
         isEdit: false,
         errors: errors.array(),
         product: req.body,
