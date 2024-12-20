@@ -93,7 +93,7 @@ const updatePost = [
         title: `Editar Gênero: ${genre.name}`,
         errors: errors.array(),
         isEdit: true,
-        genre: { name: req.body.genre },
+        genre: req.body,
       });
     }
 

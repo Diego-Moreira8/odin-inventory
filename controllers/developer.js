@@ -96,7 +96,7 @@ const updatePost = [
         title: `Editar Desenvolvedor: ${developer.name}`,
         errors: errors.array(),
         isEdit: true,
-        developer: { name: req.body.developer },
+        developer: req.body,
       });
     }
 

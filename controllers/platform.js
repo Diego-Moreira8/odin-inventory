@@ -93,7 +93,7 @@ const updatePost = [
         title: `Editar Plataforma: ${platform.name}`,
         errors: errors.array(),
         isEdit: true,
-        platform: { name: req.body.platform },
+        platform: req.body,
       });
     }
 
