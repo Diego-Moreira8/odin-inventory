@@ -4,28 +4,17 @@
   action="<%= isEdit ? `/produto/${product?.id}/editar` : '/produto/criar' %>"
   method="post"
 >
-  <% if (errors.length > 0) { %>
-    <ul>
-      <% errors.forEach(error => { %>
-        <li>
-          <p><%= error.msg %></p>
-        </li>
-      <% }) %>
-    </ul>
-  <% } %>
+  <%- include("../../partials/form-errors", errors) %>
 
-  <% if (isEdit) { %>
-    <div class="formRow">
-      <label for="game_id">Jogo:</label>
-      <select name="game_id" id="game_id" disabled>
+  <div class="mb-3">
+    <label class="form-label" for="game_id">Jogo:</label>
+
+    <% if (isEdit) { %>
+      <select class="form-select" name="game_id" id="game_id" disabled>
         <option><%= product?.game_title %></option>
       </select>
-    </div>
-  <% } else { %>
-    <div class="formRow">
-      <label for="game_id">Jogo:</label>
-
-      <select name="game_id" id="game_id">
+    <% } else { %>
+      <select class="form-select" name="game_id" id="game_id">
         <option value="">--Selecione um título--</option>
         
         <% allGames.forEach(game => { %>
@@ -37,22 +26,18 @@
           </option>
         <% }) %>
       </select>
-    </div>
-  <% } %>
+    <% } %>
+  </div>
 
+  <div class="mb-3">
+    <label class="form-label" for="platform_id">Plataforma:</label>
 
-  <% if (isEdit) { %>
-    <div class="formRow">
-      <label for="platform_id">Plataforma:</label>
-      <select name="platform_id" id="platform_id" disabled>
-          <option><%= product?.platform_name %></option>
+    <% if (isEdit) { %>
+      <select class="form-select" name="platform_id" id="platform_id" disabled>
+        <option><%= product?.platform_name %></option>
       </select>
-    </div>
-  <% } else { %>
-    <div class="formRow">
-      <label for="platform_id">Plataforma:</label>
-  
-      <select name="platform_id" id="platform_id">
+    <% } else { %>
+      <select class="form-select" name="platform_id" id="platform_id">
         <option value="">--Selecione uma plataforma--</option>
         
         <% allPlatforms.forEach(platform => { %>
@@ -64,12 +49,19 @@
           </option>
         <% }) %>
       </select>
-    </div>
-  <% } %>  
+    <% } %>  
+  </div>
 
-  <div class="formRow">
-    <label for="launch_date">Data de lançamento na plataforma escolhida:</label>
+
+  <div class="mb-3">
+    <label
+      class="form-label"
+      for="launch_date"
+    >
+      Data de lançamento na plataforma escolhida:
+    </label>
     <input
+      class="form-control"
       type="date"
       value="<%= product?.launch_date || '' %>"
       name="launch_date"
@@ -78,27 +70,31 @@
     >
   </div>
 
-  <div class="formRow">
-    <label for="price">Preço:</label>
-    <input 
-      type="number"
-      min="0"
-      max="1000000"
-      step="0.01"
-      value="<%= product?.price || '' %>"
-      name="price"
-      id="price"
-      required
-    >
+  <div class="mb-3">
+    <label class="form-label" for="price">Preço:</label>
+    <div class="input-group">
+      <span class="input-group-text">R$</span>
+      <input
+        class="form-control"
+        type="number"
+        min="0"
+        max="1000000"
+        step="0.01"
+        value="<%= product?.price || '0.00' %>"
+        name="price"
+        id="price"
+        required
+      >
+    </div>
   </div>
 
   <input type="hidden" name="id" value="<%= product?.id || '' %>">
 
-  <button type="submit">Salvar</button> 
+  <button class="btn btn-success" type="submit">Salvar</button> 
 
   <% const upperUrl = isEdit ? `/produto/${product?.id}` : "/jogos" %>
 
-  <a href="<%= upperUrl %>">
+  <a class="btn btn-light" href="<%= upperUrl %>">
     Cancelar
   </a>
 </form>

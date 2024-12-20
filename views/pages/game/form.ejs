@@ -4,55 +4,51 @@
   action="<%= isEdit ? `/jogo/${game?.id}/editar` : '/jogo/criar' %>"
   method="post"
 >
-  <% if (errors.length > 0) { %>
-    <ul>
-      <% errors.forEach(error => { %>
-        <li>
-          <p><%= error.msg %></p>
-        </li>
-      <% }) %>
-    </ul>
-  <% } %>
+  <%- include("../../partials/form-errors", errors) %>
 
-  <div class="formRow">
-    <label for="title">Jogo:</label>
+  <div class="mb-3">
+    <label class="form-label" for="title">Jogo:</label>
     <input 
+      class="form-control"
       type="text"
       name="title"
       id="title"
       value="<%= game?.title || "" %>"
-      placeholder="The Witcher 3: Wild Hunt"
+      placeholder="Ex.: The Witcher 3: Wild Hunt"
       maxlength="100"
       required
     >
   </div>
 
-  <div class="formRow">
-    <label for="description">Descrição:</label>
+  <div class="mb-3">
+    <label class="form-label" for="description">Descrição:</label>
     <textarea
+      class="form-control"
       name="description"
       id="description"
       rows="5"
+      placeholder="Dica: Insira a descrição disponibilizada pelo desenvolvedor."
       maxlength="250"
     ><%= game?.description || "" %></textarea>
   </div>
 
-  <div class="formRow">
-    <label for="website">Site oficial:</label>
+  <div class="mb-3">
+    <label class="form-label" for="website">Site oficial:</label>
     <input 
+      class="form-control"
       type="url"
       name="website"
       id="website"
       value="<%= game?.website || "" %>"
-      placeholder="https://www.thewitcher.com/witcher3"
+      placeholder="Ex.: https://www.thewitcher.com/witcher3"
       maxlength="100"
     >
   </div>
 
-  <div class="formRow">
-    <label for="developer_id">Desenvolvedor:</label>
+  <div class="mb-3">
+    <label class="form-label" for="developer_id">Desenvolvedor:</label>
 
-    <select name="developer_id" id="developer">
+    <select class="form-select" name="developer_id" id="developer">
       <option value="">--Selecione um desenvolvedor--</option>
       
       <% allDevelopers.forEach(dev => { %>
@@ -66,7 +62,7 @@
     </select>
   </div>
 
-  <fieldset>  
+  <fieldset class="mb-3">  
     <legend>Escolha os gêneros:</legend>
 
     <% allGenres.forEach(genre => { %>
@@ -74,13 +70,17 @@
 
       <div>
         <input
+          class="form-check-input"
           type="checkbox"
           name="genres"
           id="<%= inputId %>"
           value="<%= genre.id %>"
           <%= gameGenres.find(id => id == genre.id) ? "checked" : "" %>
         >
-        <label for="<%= inputId %>"><%= genre.name %></label>
+        
+        <label class="form-check-label" for="<%= inputId %>">
+          <%= genre.name %>
+        </label>
       </div>
     <% }) %>
   </fieldset>
@@ -88,11 +88,11 @@
 
   <input type="hidden" name="id" value="<%= game?.id || '' %>">
 
-  <button type="submit">Salvar</button> 
+  <button class="btn btn-success" type="submit">Salvar</button> 
 
   <% const upperUrl = isEdit ? `/jogo/${game?.id}` : "/jogos" %>
 
-  <a href="<%= upperUrl %>">
+  <a class="btn btn-light" href="<%= upperUrl %>">
     Cancelar
   </a>
 </form>

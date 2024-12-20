@@ -4,24 +4,18 @@
   method="post"
   action="<%= isEdit ? `/desenvolvedor/${developer?.id}/editar` : '/desenvolvedor/criar' %>"
 >
-  <% if (errors.length > 0) { %>
-    <ul>
-      <% errors.forEach(error => { %>
-        <li>
-          <p><%= error.msg %></p>
-        </li>
-      <% }) %>
-    </ul>
-  <% } %>
+  <%- include("../../partials/form-errors", errors) %>
 
-  <div class="formRow">
-    <label for="developer">Nome:</label>
+  <div class="mb-3">
+    <label class="form-label" for="developer">Nome:</label>
     
     <input
+      class="form-control"
       type="text"
       name="developer"
       id="developer"
-      value="<%= developer?.name || '' %> "
+      placeholder="Ex.: CD Projekt Red"
+      value="<%= developer?.name || '' %>"
       maxlength="50"
       required
     />
@@ -29,11 +23,11 @@
 
   <input type="hidden" name="id" value="<%= developer?.id || '' %>">
 
-  <button type="submit">Salvar</button>
+  <button class="btn btn-success" type="submit">Salvar</button>
   
   <% const upperUrl = isEdit ? `/desenvolvedor/${developer?.id}` : "/desenvolvedores" %>
 
-  <a href="<%= upperUrl %>">
+  <a class="btn btn-light" href="<%= upperUrl %>">
     Cancelar
   </a>
 </form>

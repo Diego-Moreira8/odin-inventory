@@ -4,24 +4,18 @@
   method="post"
   action="<%= isEdit ? `/genero/${genre?.id}/editar` : '/genero/criar' %>"
 >
-  <% if (errors.length > 0) { %>
-    <ul>
-      <% errors.forEach(error => { %>
-        <li>
-          <p><%= error.msg %></p>
-        </li>
-      <% }) %>
-    </ul>
-  <% } %>
+  <%- include("../../partials/form-errors", errors) %>
 
-  <div class="formRow">
-    <label for="genre">Nome:</label>
+  <div class="mb-3">
+    <label class="form-label" for="genre">Nome:</label>
     
     <input
+      class="form-control"
       type="text"
       name="genre"
       id="genre"
-      value="<%= genre?.name || '' %> "
+      placeholder="Ex.: Corrida"
+      value="<%= genre?.name || '' %>"
       maxlength="50"
       required
     />
@@ -29,11 +23,11 @@
 
   <input type="hidden" name="id" value="<%= genre?.id || '' %>">
 
-  <button type="submit">Salvar</button>
+  <button class="btn btn-success" type="submit">Salvar</button>
 
   <% const upperUrl = isEdit ? `/genero/${genre?.id}` : "/generos" %>
 
-  <a href="<%= upperUrl %>">
+  <a class="btn btn-light" href="<%= upperUrl %>">
     Cancelar
   </a>
 </form>
