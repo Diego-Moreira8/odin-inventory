@@ -20,7 +20,8 @@ async function getGamesFromDeveloper(developer_id) {
           WHERE games.developer_id = $1
         ) AS products_count
       FROM games
-      WHERE developer_id = $1;
+      WHERE developer_id = $1
+      ORDER BY UPPER(title);
     `,
     [developer_id]
   );
@@ -35,7 +36,8 @@ async function getGamesWithGenre(genre_id) {
       FROM games
       JOIN games_genres
       ON games_genres.game_id = games.id
-      WHERE games_genres.genre_id = $1;
+      WHERE games_genres.genre_id = $1
+      ORDER BY UPPER(title);
     `,
     [genre_id]
   );

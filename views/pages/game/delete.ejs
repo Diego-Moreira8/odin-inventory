@@ -1,29 +1,27 @@
 <h1><%= title %></h1>
 
 <form action="<%= `/jogo/${game.id}/apagar` %>" method="post">
-  <div class="formRow">
-    <p>Deseja realmente apagar o jogo <b><%= game.title %></b>?</p>
+  <p>Deseja realmente apagar o jogo <b><%= game.title %></b>?</p>
 
-    <% if (productsForGame.length > 0) { %>
-    <h2>Atenção!</h2>
+  <% if (productsForGame.length > 0) { %>
+  <div class="alert alert-danger">
     <p>
       Todos os produtos listados abaixo, estão vinculados a este jogo. Ao
       confirmar a exclusão do jogo, todos os produtos associados serão
       permanentemente removidos!
     </p>
-
-    <ul>
+    <ul class="mb-0">
       <% productsForGame.forEach(product => { %>
         <li>
           <%= `${product.game_title} (${product.platform_name})` %>
         </li>
       <% }) %>
     </ul>
-    <% } %>
-
-    <input type="hidden" name="id" value="<%= game.id %>" />
-
-    <button type="submit">Sim</button>
-    <a href="<%= `/jogo/${game.id}` %>">Não</a>
   </div>
+  <% } %>
+
+  <input type="hidden" name="id" value="<%= game.id %>" />
+
+  <button class="btn btn-danger" type="submit">Sim, apagar</button>
+  <a class="btn btn-light" href="<%= `/jogo/${game.id}` %>">Não</a>
 </form>

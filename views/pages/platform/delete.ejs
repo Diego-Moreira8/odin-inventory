@@ -1,27 +1,25 @@
 <h1><%= title %></h1>
 
 <form action="<%= `/plataforma/${platform.id}/apagar` %>" method="post">
-  <div class="formRow">
-    <p>Deseja realmente apagar a plataforma <b><%= platform.name %></b>?</p>
+  <p>Deseja realmente apagar a plataforma <b><%= platform.name %></b>?</p>
 
-    <% if (productsForPlatform.length > 0) { %>
-    <h2>Atenção!</h2>
+  <% if (productsForPlatform.length > 0) { %>
+  <div class="alert alert-danger">
     <p>
       Todos os produtos listados abaixo estão associados a esta plataforma. Ao
       confirmar a exclusão da plataforma, todos os produtos também serão
       permanentemente apagados.
     </p>
-
-    <ul>
+    <ul class="mb-0">
       <% productsForPlatform.forEach(product => { %>
       <li><%= `${product.game_title} (${product.platform_name})` %></li>
       <% }) %>
     </ul>
-    <% } %>
-
-    <input type="hidden" name="id" value="<%= platform.id %>" />
-
-    <button type="submit">Sim</button>
-    <a href="<%= `/plataforma/${platform.id}` %>">Não</a>
   </div>
+  <% } %>
+
+  <input type="hidden" name="id" value="<%= platform.id %>" />
+
+  <button class="btn btn-danger" type="submit">Sim, apagar</button>
+  <a class="btn btn-light" href="<%= `/plataforma/${platform.id}` %>">Não</a>
 </form>

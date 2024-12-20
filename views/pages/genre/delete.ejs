@@ -1,26 +1,24 @@
 <h1><%= title %></h1>
 
 <form action="<%= `/genero/${genre.id}/apagar` %>" method="post">
-  <div class="formRow">
-    <p>Tem certeza de que deseja excluir o gênero <b><%= genre.name %></b>?</p>
+  <p>Tem certeza de que deseja excluir o gênero <b><%= genre.name %></b>?</p>
 
-    <% if (gamesWithGenre.length > 0) { %>      
+  <% if (gamesWithGenre.length > 0) { %>      
+  <div class="alert alert-danger">
     <p>
       Os jogos listados abaixo estão associados a ele. Ao prosseguir, os jogos
       não serão excluídos, mas perderão a associação com este gênero.
     </p>
-
-    <ul>
+    <ul class="mb-0">
       <% gamesWithGenre.forEach(game => { %>
       <li><%= game.title %></a></li>
       <% }) %>
     </ul>
-    <% } %>
-
-
-    <input type="hidden" name="id" value="<%= genre.id %>" />
-
-    <button type="submit">Sim</button>
-    <a href="<%= `/genero/${genre.id}` %>">Não</a>
   </div>
+  <% } %>
+
+  <input type="hidden" name="id" value="<%= genre.id %>" />
+
+  <button class="btn btn-danger" type="submit">Sim, apagar</button>
+  <a class="btn btn-light" href="<%= `/genero/${genre.id}` %>">Não</a>
 </form>
