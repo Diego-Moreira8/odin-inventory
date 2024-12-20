@@ -1,46 +1,73 @@
 <h1><%= game.title %></h1>
 
-<% if (game.description) { %>
-  <p><%= game.description %></p>
-<% } else { %>
-  <p><i>Não foi fornecida uma descrição.</i></p>
-<% } %>
-
-<% if (game.website) { %>
-  <a href="<%= game.website %>" target="_blank">Site oficial</a>
-<% } else { %>
-  <p><i>Não foi fornecido um site oficial.</i></p>
-<% } %>
-
-<p>
-  <b>Desenvolvedor: </b>
-  <a href="<%= `/desenvolvedor/${game.developer_id}` %>">
-    <%= game.developer_name %>
+<div class="btn-group my-4">
+  <a
+    class="btn btn-secondary"
+    href="<%= `/jogo/${game.id}/editar` %>"
+  >
+    Editar
   </a>
-</p>
+  <a
+    class="btn btn-secondary"
+    href="<%= `/jogo/${game.id}/apagar` %>"
+  >
+    Apagar
+  </a>
+</div>
+
+<div class="my-4">
+  <% if (game.description) { %>
+    <p><%= game.description %></p>
+  <% } else { %>
+    <p><i>Não foi fornecida uma descrição.</i></p>
+  <% } %>
+</div>
+
+<div class="my-4">
+  <% if (game.website) { %>
+    <a 
+      class="icon-link icon-link-hover"
+      href="<%= game.website %>"
+      target="_blank"  
+    >
+      Site oficial
+      <i class="bi bi-box-arrow-up-right"></i>
+    </a>
+  <% } else { %>
+    <p><i>Não foi fornecido um site oficial.</i></p>
+  <% } %>
+</div>
+
+<div class="my-4">
+  <p>
+    <b>Desenvolvedor: </b>
+    <a href="<%= `/desenvolvedor/${game.developer_id}` %>">
+      <%= game.developer_name %>
+    </a>
+  </p>
+</div>
 
 <p>
-  <b><%= (genres.length > 1) ? "Gêneros" : "Gênero" %>:</b>
-  <% genres.forEach((genre, i, array) => { %>
-    <a href="<%= `/genero/${genre.id}` %>"><%= genre.name %></a><span><%= (i === array.length - 1) ? "." : ", " %></span>
-  <% }) %>
+  <% if (genres.length > 0) { %>
+    <b><%= (genres.length > 1) ? "Gêneros" : "Gênero" %>:</b>
+    <% genres.forEach((genre, i, array) => { %>
+      <a href="<%= `/genero/${genre.id}` %>"><%= genre.name %></a><span><%= (i === array.length - 1) ? "." : ", " %></span>
+    <% }) %>
+  <% } else { %>
+    <i>Nenhum gênero foi fornecido.</i>
+  <% }  %>
 </p>
-
-<a href="<%= `/jogo/${game.id}/editar` %>">Editar</a>
-<a href="<%= `/jogo/${game.id}/apagar` %>">Apagar</a>
 
 <% if (productsForGame.length > 0) { %>
   <h2>Produtos para este Jogo</h2>
   
-  <ul>
+  <div class="list-group">
     <% productsForGame.forEach(products => { %>
-      <li>
-        <a href="<%= `/produto/${products.id}` %>">
-          <%= `${products.game_title} (${products.platform_name})` %>
-        </a>
-      </li>
+      <a class="list-group-item list-group-item-action" href="<%= `/produto/${products.id}` %>">
+        <%= `${products.game_title} (${products.platform_name})` %>
+      </a>
     <% }) %>
-  </ul>
-  <% } else { %>
-    <p><i>Não há produtos para este jogo.</i></p>
-  <% } %>
+  </div>
+<% } else { %>
+  <p><i>Não há produtos para este jogo.</i></p>
+<% } %>

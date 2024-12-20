@@ -1,18 +1,30 @@
 <h1><%= developer.name %></h1>
 
-<a href="<%= `/desenvolvedor/${developer.id}/editar` %>">Editar</a>
-<a href="<%= `/desenvolvedor/${developer.id}/apagar` %>">Apagar</a>
+<div class="btn-group my-4">
+  <a
+    class="btn btn-secondary"
+    href="<%= `/desenvolvedor/${developer.id}/editar` %>"
+    >Editar</a
+  >
+  <a
+    class="btn btn-secondary"
+    href="<%= `/desenvolvedor/${developer.id}/apagar` %>"
+    >Apagar</a
+  >
+</div>
 
 <% if (gamesFromDeveloper.length > 0) { %>
 <h2>Jogos do Desenvolvedor</h2>
 
-<ul>
+<div class="list-group">
   <% gamesFromDeveloper.forEach(game => { %>
-  <li>
-    <a href="<%= `/jogo/${game.id}` %>"><%= game.title %></a>
-  </li>
+  <a
+    class="list-group-item list-group-item-action"
+    href="<%= `/jogo/${game.id}` %>"
+    ><%= game.title %></a
+  >
   <% }) %>
-</ul>
+</div>
 <% } else { %>
 <p><i>Não há jogos desse desenvolvedor.</i></p>
 <% } %>

@@ -1,20 +1,27 @@
 <h1><%= platform.name %></h1>
 
-<a href="<%= `/plataforma/${platform.id}/editar` %>">Editar</a>
-<a href="<%= `/plataforma/${platform.id}/apagar` %>">Apagar</a>
+<div class="btn-group my-4">
+  <a class="btn btn-secondary" href="<%= `/plataforma/${platform.id}/editar` %>"
+    >Editar</a
+  >
+  <a class="btn btn-secondary" href="<%= `/plataforma/${platform.id}/apagar` %>"
+    >Apagar</a
+  >
+</div>
 
 <% if (productsForPlatform.length > 0) { %>
 <h2>Produtos para esta Plataforma</h2>
 
-<ul>
+<div class="list-group">
   <% productsForPlatform.forEach(product => { %>
-  <li>
-    <a href="<%= `/produto/${product.id}` %>">
-      <%= `${product.game_title}` %>
-    </a>
-  </li>
+  <a
+    class="list-group-item list-group-item-action"
+    href="<%= `/produto/${product.id}` %>"
+  >
+    <%= `${product.game_title}` %>
+  </a>
   <% }) %>
-</ul>
+</div>
 <% } else { %>
 <p><i>Não há produtos para esta plataforma.</i></p>
 <% } %>

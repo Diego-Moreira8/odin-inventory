@@ -1,9 +1,16 @@
 <h1><%= title %></h1>
 
-<a href="<%= `/produto/${product.id}/editar` %>">Editar</a>
-<a href="<%= `/produto/${product.id}/apagar` %>">Apagar</a>
-
-<a href="<%= `/jogo/${product.game_id}` %>">Gerenciar título</a>
+<div class="btn-group my-4">
+  <a class="btn btn-secondary" href="<%= `/jogo/${product.game_id}` %>"
+    >Gerenciar título</a
+  >
+  <a class="btn btn-secondary" href="<%= `/produto/${product.id}/editar` %>"
+    >Editar</a
+  >
+  <a class="btn btn-secondary" href="<%= `/produto/${product.id}/apagar` %>"
+    >Apagar</a
+  >
+</div>
 
 <p>
   <b>Plataforma: </b>

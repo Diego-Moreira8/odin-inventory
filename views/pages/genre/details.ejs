@@ -1,18 +1,26 @@
 <h1><%= genre.name %></h1>
 
-<a href="<%= `/genero/${genre.id}/editar` %>">Editar</a>
-<a href="<%= `/genero/${genre.id}/apagar` %>">Apagar</a>
+<div class="btn-group my-4">
+  <a class="btn btn-secondary" href="<%= `/genero/${genre.id}/editar` %>"
+    >Editar</a
+  >
+  <a class="btn btn-secondary" href="<%= `/genero/${genre.id}/apagar` %>"
+    >Apagar</a
+  >
+</div>
 
 <% if (gamesWithGenre.length > 0) { %>
 <h2>Jogos com o Gênero</h2>
 
-<ul>
+<div class="list-group">
   <% gamesWithGenre.forEach(game => { %>
-  <li>
-    <a href="<%= `/jogo/${game.id}` %>"><%= game.title %></a>
-  </li>
+  <a
+    class="list-group-item list-group-item-action"
+    href="<%= `/jogo/${game.id}` %>"
+    ><%= game.title %></a
+  >
   <% }) %>
-</ul>
+</div>
 <% } else { %>
 <p><i>Não há jogos com esse gênero.</i></p>
 <% } %>
