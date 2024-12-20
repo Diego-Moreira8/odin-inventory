@@ -16,8 +16,8 @@ const validateForm = [
 
   body("description")
     .trim()
-    .isLength({ max: 250 })
-    .withMessage("A descrição pode ter no máximo 250 caracteres."),
+    .isLength({ max: 500 })
+    .withMessage("A descrição pode ter no máximo 500 caracteres."),
 
   body("website")
     .trim()
