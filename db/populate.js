@@ -115,71 +115,71 @@ async function insertGames() {
     insertGame(
       0,
       "Counter Strike 2",
-      "Descrição.",
-      "https://www.google.com/",
+      "Há mais de duas décadas, o Counter-Strike oferece uma experiência competitiva de elite moldada por milhões de jogadores mundialmente. Agora, o próximo capítulo da história do CS vai começar. Isso é Counter-Strike 2.",
+      "https://www.counter-strike.net/",
       developers[9]
     ),
     insertGame(
       1,
       "The Witcher 3: Wild Hunt",
-      "Descrição.",
-      "https://www.google.com/",
+      "Você é Geralt de Rívia, mercenário matador de monstros. Você está em um continente devastado pela guerra e infestado de monstros para você explorar à vontade. Sua tarefa é encontrar Ciri, a Criança da Profecia — uma arma viva que pode alterar a forma do mundo.",
+      "https://www.thewitcher.com/br/pt-br/witcher3",
       developers[1]
     ),
     insertGame(
       2,
       "The Elder Scrolls V: Skyrim",
-      "Descrição.",
-      "https://www.google.com/",
+      "Skyrim é um RPG de mundo aberto ambientado na província fictícia de Tamriel. O jogador assume o papel do Dragonborn, um herói destinado a derrotar Alduin, o Devorador de Mundos. Com gráficos imersivos, combates dinâmicos e uma vasta liberdade para explorar, o jogo oferece inúmeras quests, facções e habilidades para personalizar o personagem. Lançado pela Bethesda, é aclamado por sua narrativa rica e universo envolvente.",
+      "https://elderscrolls.bethesda.net/pt/skyrim10",
       developers[0]
     ),
     insertGame(
       3,
       "Stardew Valley",
-      "Descrição.",
-      "https://www.google.com/",
+      "Você herdou a antiga fazenda do seu avô, em Stardew Valley. Com ferramentas de segunda-mão e algumas moedas, você parte para dar início a sua nova vida. Será que você vai aprender a viver da terra, a transformar esse matagal em um próspero lar?",
+      "https://www.stardewvalley.net/",
       developers[2]
     ),
     insertGame(
       4,
       "Tomb Raider",
-      "Descrição.",
-      "https://www.google.com/",
+      "Tomb Raider explora a intensa história da origem de Lara Croft, e sua ascensão de uma jovem mulher a uma sobrevivente experiente.",
+      "https://www.tombraider.com/",
       developers[7]
     ),
     insertGame(
       5,
       "Rise of the Tomb Raider",
-      "Descrição.",
-      "https://www.google.com/",
+      "Rise of the Tomb Raider é um jogo de ação e aventura que segue Lara Croft em sua busca pela mítica cidade de Kitezh, em uma jornada para desvendar o segredo da imortalidade. Situado em ambientes deslumbrantes e perigosos, combina exploração, combate e resolução de enigmas. Com gráficos impressionantes e uma história emocionante, o jogo aprofunda o desenvolvimento de Lara como exploradora e sobrevivente.",
+      "https://www.tombraider.com/",
       developers[7]
     ),
     insertGame(
       6,
       "Shadow of the Tomb Raider",
-      "Descrição.",
-      "https://www.google.com/",
+      "Shadow of the Tomb Raider é um jogo de ação e aventura que conclui a jornada de Lara Croft para se tornar a lendária exploradora. Situado na América Central e do Sul, Lara enfrenta a Trindade enquanto tenta impedir um apocalipse maia. Com paisagens exuberantes, tumbas desafiadoras e mecânicas de stealth aprimoradas, o jogo combina narrativa envolvente, exploração intensa e perigos ocultos em cada canto.",
+      "https://www.tombraider.com/",
       developers[7]
     ),
     insertGame(
       7,
       "Cyberpunk 2077",
-      "Descrição.",
-      "https://www.google.com/",
+      "Cyberpunk 2077 é um RPG de ação e aventura em mundo aberto que se passa em Night City, uma megalópole perigosa onde todos são obcecados por poder, glamour e alterações corporais.",
+      "https://www.cyberpunk.net/",
       developers[1]
     ),
     insertGame(
       8,
       "Red Dead Redemption II",
-      "Descrição.",
-      "https://www.google.com/",
+      "Arthur Morgan e a gangue Van der Linde são bandidos em fuga. Com agentes federais e os melhores caçadores de recompensas no seu encalço, a gangue precisa roubar, assaltar e lutar para sobreviver no impiedoso coração dos Estados Unidos. Conforme divisões internas profundas ameaçam despedaçar a gangue, Arthur deve fazer uma escolha entre os seus próprios ideais e a lealdade à gangue que o criou.",
+      "https://www.rockstargames.com/reddeadredemption2/",
       developers[6]
     ),
     insertGame(
       9,
       "Outer Wilds",
-      "Descrição.",
-      "https://www.google.com/",
+      "Ganhador do Jogo do Ano de 2019 pela Giant Bomb, Polygon, Eurogamer e The Guardian, Outer Wilds é um jogo de mistério de mundo aberto aclamado pela crítica que retrata um sistema solar fadado a um loop temporal perpétuo.",
+      "https://www.mobiusdigitalgames.com/outer-wilds.html",
       developers[5]
     ),
   ]);
@@ -226,10 +226,23 @@ async function insertProducts() {
   console.log("Start inserting products");
   await Promise.all([
     insertProduct(0, games[0], platforms[0], "2023-09-27", 0),
-    insertProduct(1, games[0], platforms[1], "2023-09-27", 0),
-    insertProduct(2, games[0], platforms[2], "2023-09-27", 0),
-    insertProduct(3, games[1], platforms[2], "2023-09-27", 0),
-    insertProduct(4, games[2], platforms[2], "2023-09-27", 0),
+    insertProduct(1, games[1], platforms[0], "2015-05-19", 129.99),
+    insertProduct(2, games[1], platforms[1], "2015-05-19", 129.99),
+    insertProduct(3, games[1], platforms[9], "2015-05-19", 129.99),
+    insertProduct(4, games[1], platforms[11], "2019-10-15", 129.99),
+    insertProduct(5, games[1], platforms[10], "2022-01-01", 129.99),
+    insertProduct(6, games[1], platforms[5], "2022-01-01", 129.99),
+    insertProduct(7, games[2], platforms[0], "2011-11-11", 50),
+    insertProduct(8, games[2], platforms[8], "2011-11-11", 50),
+    insertProduct(9, games[3], platforms[0], "2016-02-26", 20.9),
+    insertProduct(10, games[4], platforms[0], "2013-03-05", 9.9),
+    insertProduct(11, games[4], platforms[8], "2013-03-05", 19.9),
+    insertProduct(12, games[5], platforms[0], "2016-01-28", 34.9),
+    insertProduct(13, games[5], platforms[1], "2015-11-10", 54.9),
+    insertProduct(14, games[5], platforms[9], "2016-10-11", 79.9),
+    insertProduct(15, games[6], platforms[0], "2018-09-14", 49.9),
+    insertProduct(16, games[6], platforms[9], "2018-09-14", 79.9),
+    insertProduct(17, games[6], platforms[1], "2018-09-14", 79.9),
   ]);
   console.log("Done inserting products");
 }
