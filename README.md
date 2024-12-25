@@ -1,6 +1,6 @@
 # App de Inventário
 
-Este é um projeto de um sistema de inventário fictício proposto pelo site [The Odin Project](https://www.theodinproject.com/) para fixar o aprendizado sobre PostgreSQL.
+Este é um projeto de um sistema de inventário fictício proposto pelo site [The Odin Project](https://www.theodinproject.com/) para fixar o aprendizado sobre PostgreSQL. Um exemplo do projeto está online em: [odin-inventory.glitch.me](https://odin-inventory.glitch.me/).
 
 ![Captura de tela do projeto](./public/images/project-screenshot.png)
 
@@ -11,6 +11,10 @@ Este é um projeto de um sistema de inventário fictício proposto pelo site [Th
 - PostgreSQL
 - EJS
 - Bootstrap
+
+## Modelagem de Dados e Rotas
+
+![Modelagem de Dados e Rotas](./public/images/data-and-routers-modeling.png)
 
 ## Como Executar
 
