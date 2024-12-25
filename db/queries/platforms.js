@@ -48,10 +48,20 @@ async function deletePlatform(id) {
   await pool.query("DELETE FROM platforms WHERE id = $1;", [id]);
 }
 
+async function validateUniqueName(name) {
+  const { rows } = await pool.query(
+    "SELECT COUNT(*) FROM platforms WHERE UPPER(name) = UPPER($1);",
+    [name]
+  );
+
+  return rows[0].count == 0;
+}
+
 module.exports = {
   getAllPlatforms,
   getPlatform,
   createPlatform,
   updatePlatform,
   deletePlatform,
+  validateUniqueName,
 };

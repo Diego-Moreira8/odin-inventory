@@ -12,7 +12,7 @@
     <input
       class="form-control"
       type="text"
-      name="developer"
+      name="name"
       id="developer"
       placeholder="Ex.: CD Projekt Red"
       value="<%= developer?.name || '' %>"
@@ -22,6 +22,9 @@
   </div>
 
   <input type="hidden" name="id" value="<%= developer?.id || '' %>">
+
+  <!-- Holds the original name to check for changes -->
+  <input type="hidden" name="currentName" value="<%= currentName %>">
 
   <button class="btn btn-success" type="submit">Salvar</button>
   

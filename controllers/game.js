@@ -12,7 +12,19 @@ const validateForm = [
     .notEmpty()
     .withMessage("O jogo precisa ter um título.")
     .isLength({ max: 100 })
-    .withMessage("O título do jogo pode ter no máximo 100 caracteres."),
+    .withMessage("O título do jogo pode ter no máximo 100 caracteres.")
+    .custom(async (value, { req }) => {
+      const { title, currentTitle } = req.body;
+      const noChangesMade = title === currentTitle;
+
+      if (noChangesMade) return;
+
+      const alreadyExists = !(await db.games.validateUniqueTitle(title));
+
+      if (alreadyExists) {
+        throw new Error("Já existe um jogo com este título.");
+      }
+    }),
 
   body("description")
     .trim()
@@ -72,6 +84,7 @@ async function createGet(req, res, next) {
     partial: `${viewsDirectory}/form`,
     title: "Criar Jogo",
     isEdit: false,
+    currentTitle: "",
     errors: [],
     game: {},
     gameGenres: [],
@@ -97,6 +110,7 @@ const createPost = [
         partial: `${viewsDirectory}/form`,
         title: "Criar Jogo",
         isEdit: false,
+        currentTitle: "",
         errors: errors.array(),
         game: req.body,
         gameGenres: req.body.genres,
@@ -136,6 +150,7 @@ async function updateGet(req, res, next) {
     partial: `${viewsDirectory}/form`,
     title: `Editar Jogo: ${game.title}`,
     isEdit: true,
+    currentTitle: game.title,
     errors: [],
     game,
     gameGenres: gameGenres.map((g) => g.id),
@@ -161,6 +176,7 @@ const updatePost = [
         partial: `${viewsDirectory}/form`,
         title: "Editar Jogo",
         isEdit: true,
+        currentTitle: req.body.currentTitle,
         errors: errors.array(),
         game: req.body,
         gameGenres: req.body.genres,

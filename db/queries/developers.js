@@ -57,10 +57,20 @@ async function deleteDeveloper(id) {
   await pool.query("DELETE FROM developers WHERE id = $1;", [id]);
 }
 
+async function validateUniqueName(name) {
+  const { rows } = await pool.query(
+    "SELECT COUNT(*) FROM developers WHERE UPPER(name) = UPPER($1);",
+    [name]
+  );
+
+  return rows[0].count == 0;
+}
+
 module.exports = {
   getAllDevelopers,
   getDeveloper,
   createDeveloper,
   updateDeveloper,
   deleteDeveloper,
+  validateUniqueName,
 };

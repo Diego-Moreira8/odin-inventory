@@ -7,12 +7,24 @@ const viewsDirectory = "../pages/platform";
 const errorMessage = "Plataforma não encontrada!";
 
 const validateForm = [
-  body("platform")
+  body("name")
     .trim()
     .notEmpty()
     .withMessage("A plataforma precisa ter um nome.")
     .isLength({ max: 50 })
-    .withMessage("O nome da plataforma pode ter no máximo 50 caracteres."),
+    .withMessage("O nome da plataforma pode ter no máximo 50 caracteres.")
+    .custom(async (value, { req }) => {
+      const { name, currentName } = req.body;
+      const noChangesMade = name === currentName;
+
+      if (noChangesMade) return;
+
+      const alreadyExists = !(await db.platforms.validateUniqueName(name));
+
+      if (alreadyExists) {
+        throw new Error("Já existe uma plataforma com este nome.");
+      }
+    }),
 ];
 
 async function detailsGet(req, res, next) {
@@ -37,6 +49,7 @@ async function createGet(req, res, next) {
     partial: `${viewsDirectory}/form`,
     title: "Criar Plataforma",
     isEdit: false,
+    currentName: "",
     platform: {},
     errors: [],
   });
@@ -53,12 +66,13 @@ const createPost = [
         partial: `${viewsDirectory}/form`,
         title: "Criar Plataforma",
         isEdit: false,
-        platform: { name: req.body.platform },
+        currentName: "",
+        platform: req.body,
         errors: errors.array(),
       });
     }
 
-    const id = await db.platforms.createPlatform(req.body.platform);
+    const id = await db.platforms.createPlatform(req.body.name);
     res.redirect(`/plataforma/${id}`);
   },
 ];
@@ -74,6 +88,7 @@ async function updateGet(req, res, next) {
     partial: `${viewsDirectory}/form`,
     title: `Editar Plataforma: ${platform.name}`,
     errors: [],
+    currentName: platform.name,
     isEdit: true,
     platform,
   });
@@ -92,12 +107,13 @@ const updatePost = [
         partial: `${viewsDirectory}/form`,
         title: `Editar Plataforma: ${platform.name}`,
         errors: errors.array(),
+        currentName: req.body.currentName,
         isEdit: true,
         platform: req.body,
       });
     }
 
-    await db.platforms.updatePlatform(req.body.id, req.body.platform);
+    await db.platforms.updatePlatform(req.body.id, req.body.name);
     res.redirect(`/plataforma/${req.body.id}`);
   },
 ];

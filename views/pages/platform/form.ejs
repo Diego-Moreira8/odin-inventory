@@ -12,7 +12,7 @@
     <input
       class="form-control"
       type="text"
-      name="platform"
+      name="name"
       id="platform"
       placeholder="X-Box Series X"
       value="<%= platform?.name || '' %>"
@@ -22,6 +22,9 @@
   </div>
 
   <input type="hidden" name="id" value="<%= platform?.id || '' %>">
+  
+  <!-- Holds the original name to check for changes -->
+  <input type="hidden" name="currentName" value="<%= currentName %>">
 
   <button class="btn btn-success" type="submit">Salvar</button>
 

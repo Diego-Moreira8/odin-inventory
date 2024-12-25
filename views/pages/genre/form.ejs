@@ -12,7 +12,7 @@
     <input
       class="form-control"
       type="text"
-      name="genre"
+      name="name"
       id="genre"
       placeholder="Ex.: Corrida"
       value="<%= genre?.name || '' %>"
@@ -22,6 +22,9 @@
   </div>
 
   <input type="hidden" name="id" value="<%= genre?.id || '' %>">
+
+  <!-- Holds the original name to check for changes -->
+  <input type="hidden" name="currentName" value="<%= currentName %>">
 
   <button class="btn btn-success" type="submit">Salvar</button>
 

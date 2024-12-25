@@ -47,10 +47,20 @@ async function deleteGenre(id) {
   await pool.query("DELETE FROM genres WHERE id = $1;", [id]);
 }
 
+async function validateUniqueName(name) {
+  const { rows } = await pool.query(
+    "SELECT COUNT(*) FROM genres WHERE UPPER(name) = UPPER($1);",
+    [name]
+  );
+
+  return rows[0].count == 0;
+}
+
 module.exports = {
   getAllGenres,
   getGenre,
   createGenre,
   updateGenre,
   deleteGenre,
+  validateUniqueName,
 };

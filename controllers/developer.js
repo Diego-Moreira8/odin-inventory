@@ -8,12 +8,24 @@ const viewsDirectory = "../pages/developer";
 const errorMessage = "Desenvolvedor não encontrado!";
 
 const validateForm = [
-  body("developer")
+  body("name")
     .trim()
     .notEmpty()
     .withMessage("O desenvolvedor precisa ter um nome.")
     .isLength({ max: 50 })
-    .withMessage("O nome do desenvolvedor pode ter no máximo 50 caracteres."),
+    .withMessage("O nome do desenvolvedor pode ter no máximo 50 caracteres.")
+    .custom(async (value, { req }) => {
+      const { name, currentName } = req.body;
+      const noChangesMade = name === currentName;
+
+      if (noChangesMade) return;
+
+      const alreadyExists = !(await db.developers.validateUniqueName(name));
+
+      if (alreadyExists) {
+        throw new Error("Já existe um desenvolvedor com este nome.");
+      }
+    }),
 ];
 
 async function detailsGet(req, res, next) {
@@ -40,6 +52,7 @@ async function createGet(req, res, next) {
     partial: `${viewsDirectory}/form`,
     title: "Criar Desenvolvedor",
     isEdit: false,
+    currentName: "",
     developer: {},
     errors: [],
   });
@@ -56,12 +69,13 @@ const createPost = [
         partial: `${viewsDirectory}/form`,
         title: "Criar Desenvolvedor",
         isEdit: false,
-        developer: { name: req.body.developer },
+        currentName: "",
+        developer: req.body,
         errors: errors.array(),
       });
     }
 
-    const id = await db.developers.createDeveloper(req.body.developer);
+    const id = await db.developers.createDeveloper(req.body.name);
     res.redirect(`/desenvolvedor/${id}`);
   },
 ];
@@ -77,6 +91,7 @@ async function updateGet(req, res, next) {
     partial: `${viewsDirectory}/form`,
     title: `Editar Desenvolvedor: ${developer.name}`,
     errors: [],
+    currentName: developer.name,
     isEdit: true,
     developer,
   });
@@ -96,11 +111,12 @@ const updatePost = [
         title: `Editar Desenvolvedor: ${developer.name}`,
         errors: errors.array(),
         isEdit: true,
+        currentName: req.body.currentName,
         developer: req.body,
       });
     }
 
-    await db.developers.updateDeveloper(req.body.id, req.body.developer);
+    await db.developers.updateDeveloper(req.body.id, req.body.name);
     res.redirect(`/desenvolvedor/${req.body.id}`);
   },
 ];
