@@ -2,8 +2,12 @@
   "name": "odin-inventory",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
+  "engines": {
+    "node": "16.14.2"
+  },
   "scripts": {
+    "start": "node app.js",
     "dev": "nodemon app.js"
   },
   "keywords": [],
@@ -14,7 +18,7 @@
     "ejs": "^3.1.10",
     "express": "^4.21.1",
     "express-validator": "^7.2.0",
-    "helmet": "^8.0.0",
+    "helmet": "^7.2.0",
     "morgan": "^1.10.0",
     "pg": "^8.13.1"
   },
